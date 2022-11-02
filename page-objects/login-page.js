@@ -2,17 +2,25 @@
    "username_input": "#user-name",
    "password_input": "#password",
    "login_button": "#login-button",
-   "inventory_container": "#inventory_container"
+   "inventory_container": "#inventory_container",
+   "loginLocator": '[class="main-0-2-81"]>div>div>div>div>div>div>div>span',
+   "loginpage": '[class="main-0-2-81"]>div>main>div>div>div>h1'
  }
  
  class LoginPage {
 
   async navigateToLoginScreen() {
-   return await page.goto(global.BASE_URL);
+   await page.goto(global.BASE_URL);
   }
 
   async verifyLoginPageIsDisplayed() {
-   return expect(await page.title()).to.equal('Swag Labs');
+    const login = await page.innerText(locators.loginpage);
+    expect(login).to.equal("We search for the internet’s best coupons");
+  }
+
+  async login () {
+    // await page.waitForSelector(locators.loginLocator);
+    await page.click(locators.loginLocator);
   }
 
   async submitLoginForm() {

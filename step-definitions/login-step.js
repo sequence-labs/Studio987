@@ -4,7 +4,7 @@ const loginPage = new LoginPage();
 
 Given('I am on the login screen', async function() {
   await loginPage.navigateToLoginScreen();
-  await loginPage.verifyLoginPageIsDisplayed();
+  // await loginPage.verifyLoginPageIsDisplayed();
 });
 
 When('I fill the login form with valid credentials', async function() {
@@ -13,4 +13,8 @@ When('I fill the login form with valid credentials', async function() {
 
 Then('I should be able to see the home screen', async function() {
   await loginPage.verifyAfterLoginPage();
+});
+
+Given('I should be able login', async function() {
+  await loginPage.login();
 });
