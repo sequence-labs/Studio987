@@ -13,6 +13,7 @@
 
   async verifyLoginPageIsDisplayed() {
    return expect(await page.title()).to.equal('Swag Labs');
+   
   }
 
   async submitLoginForm() {
