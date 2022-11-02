@@ -1,19 +1,22 @@
 const playwright = require('playwright');
-const { BeforeAll, Before, After, AfterAll , Status } = require('@cucumber/cucumber');
+const {BeforeAll, Before, After, AfterAll, Status, setDefaultTimeout} = require('@cucumber/cucumber');
 const cucumber = require('../cucumber');
 
 // const { World } = require('@cucumber/cucumber')
 
+//Cucumber Timeout
+setDefaultTimeout(60000);
+
 // Launch options.
+const run_headless = false
 const options = {
-  headless: true,
-  slowMo: 100
+    args: ["--start-maximized"], headless: run_headless, slowMo: 100, //devtools: true,
 };
 
 // Create a global browser for the test session.
 BeforeAll(async () => {
   console.log('before all ...');
-  global.browser = await playwright['firefox'].launch(options);
+  global.browser = await playwright['chromium'].launch(options);
 });
 
 AfterAll(async () => {
@@ -29,11 +32,11 @@ Before(async () => {
 });
 
 // close the page and context after each test.
-After(async () => {
-  console.log('after pass...');
-  await global.page.close();
-  await global.context.close();
-});
+// After(async () => {
+//   console.log('after pass...');
+//   await global.page.close();
+//   await global.context.close();
+// });
 
 
 After(async function (scenario) {
@@ -42,3 +45,4 @@ After(async function (scenario) {
     this.attach(buffer, 'image/png');
   }
 });
+

@@ -7,10 +7,10 @@ Given('I am on the login screen', async function() {
   await loginPage.verifyLoginPageIsDisplayed();
 });
 
-When('I fill the login form with valid credentials', async function() {
-  await loginPage.submitLoginForm();
+Given('I fill the login form with valid credentials', async function() {
+  await loginPage.submitLogin();
 });
 
-Then('I should be able to see the home screen', async function() {
+Given('I should be able to see the home screen', async function() {
   await loginPage.verifyAfterLoginPage();
 });
