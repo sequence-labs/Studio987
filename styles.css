@@ -1,0 +1,288 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.Frame1 {
+  width: 770px;
+  height: 770px;
+  position: relative;
+  background: #388495;
+}
+
+.Number {
+  position: relative;
+  color: white;
+  font-size: 24.64px;
+  font-family: Inter;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.number_box {
+  width: 77px;
+  height: 77px;
+  position: absolute;
+  background: #A4BDFD;
+  border-radius: 3.85px;
+  display: flex;          /* Add this */
+  justify-content: center; /* Add this */
+  align-items: center;     /* Add this */
+}
+
+.number_box_1 {
+  left: 166.32px;
+  top: 228.69px;
+}
+
+.number_box_2 {
+  left: 258.72px;
+  top: 228.69px;
+}
+
+.number_box_3 {
+  left: 351.89px;
+  top: 228.69px;
+}
+
+.number_box_4 {
+  left: 445.06px;
+  top: 228.69px;
+}
+
+.number_box_5 {
+  left: 538.23px;
+  top: 228.69px;
+}
+
+
+.letter_1 {
+  width: 77px;
+  height: 0px;
+  left: 166.32px;
+  top: 383.46px;
+  position: absolute;
+  border: 0.77px white solid;
+}
+
+.letter_2 {
+  width: 77px;
+  height: 0px;
+  left: 258.72px;
+  top: 383.46px;
+  position: absolute;
+  border: 0.77px white solid;
+}
+
+.letter_3 {
+  width: 77px;
+  height: 0px;
+  left: 351.12px;
+  top: 383.46px;
+  position: absolute;
+  border: 0.77px white solid;
+}
+
+.letter_5 {
+  width: 77px;
+  height: 0px;
+  left: 538.23px;
+  top: 383.46px;
+  position: absolute;
+  border: 0.77px white solid;
+}
+
+.letter_4 {
+  width: 77px;
+  height: 0px;
+  left: 445.06px;
+  top: 383.46px;
+  position: absolute;
+  border: 0.77px white solid;
+}
+
+
+.submit_box {
+  width: 77px;
+  height: 25.41px;
+  left: 353.43px;
+  top: 459.69px;
+  position: absolute;
+  background: #A4BDFD;
+  border-radius: 3.85px;
+}
+
+.hint_box {
+  width: 448.91px;
+  height: 28.49px;
+  flex-shrink: 0;
+  left: 165.44px;
+  top: 512.00px;
+  position: absolute;
+  background: #A4BDFD;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.hint_collection_box {
+  width: 448.91px;
+  height: 115.50px;
+  left: 614.46px;
+  top: 656.04px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: absolute;
+  transform: rotate(-180deg);
+  transform-origin: 0 0;
+  background: #B2E2F6;
+  border-top-left-radius: 3.85px;
+  border-top-right-radius: 3.85px;
+}
+
+.Ellipse1 {
+  width: 15.40px;
+  height: 15.40px;
+  left: 334.95px;
+  top: 418.88px;
+  position: absolute;
+  background: #A4BDFD;
+  border-radius: 9999px;
+}
+
+.Ellipse2 {
+  width: 15.40px;
+  height: 15.40px;
+  left: 359.59px;
+  top: 418.88px;
+  position: absolute;
+  background: #A4BDFD;
+  border-radius: 9999px;
+}
+
+.Ellipse3 {
+  width: 15.40px;
+  height: 15.40px;
+  left: 384.23px;
+  top: 418.88px;
+  position: absolute;
+  background: #A4BDFD;
+  border-radius: 9999px;
+}
+
+.Ellipse4 {
+  width: 15.40px;
+  height: 15.40px;
+  left: 408.87px;
+  top: 418.88px;
+  position: absolute;
+  background: #A4BDFD;
+  border-radius: 9999px;
+}
+
+.Ellipse5 {
+  width: 15.40px;
+  height: 15.40px;
+  left: 433.51px;
+  top: 418.88px;
+  position: absolute;
+  background: #A4BDFD;
+  border-radius: 9999px;
+}
+
+.Submit {
+  width: 49.28px;
+  left: 368.06px;
+  top: 465.08px;
+  position: absolute;
+  color: white;
+  font-size: 12.32px;
+  font-family: Inter;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+
+.Group1 {
+  width: 154px;
+  height: 28.49px;
+  left: 199.43px;
+  top: 562.10px;
+  position: absolute;
+}
+
+.Group2 {
+  width: 113.19px;
+  height: 28.49px;
+  left: 363.44px;
+  top: 562.10px;
+  position: absolute;
+}
+
+.Group3 {
+  width: 120.89px;
+  height: 28.49px;
+  left: 199.43px;
+  top: 598.29px;
+  position: absolute;
+}
+
+.Group4 {
+  width: 110.88px;
+  height: 28.49px;
+  left: 448.91px;
+  top: 598.29px;
+  position: absolute;
+}
+
+.Group5 {
+  width: 110.88px;
+  height: 28.49px;
+  left: 328.79px;
+  top: 598.29px;
+  position: absolute;
+}
+
+.Hints {
+  width: 40.81px;
+  left: 371.14px;
+  top: 520.52px;
+  position: absolute;
+  text-align: center;
+  color: white;
+  font-size: 12.32px;
+  font-family: Inter;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.Rectangle8 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #388495;
+  border-radius: 3.85px;
+  padding: 10px; /* adjust as needed */
+}
+
+.Sequences {
+  left: 164.78px;
+  top: 113.96px;
+  position: absolute;
+  color: white;
+  font-size: 73.92px;
+  font-family: Inter;
+  font-weight: 700;
+  word-wrap: break-word;
+}
+
+.hint_text {
+  text-align: center;
+  color: white;
+  font-size: 12.32px;
+  font-family: Inter;
+  font-weight: 400;
+  word-wrap: break-word;
+}

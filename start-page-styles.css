@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+.start_frame {
+    width: 770px;
+    height: 770px;
+    position: relative;
+    background: #388495;
+}
+
+.Sequences {
+left: 165.21px;
+top: 114.26px;
+position: absolute;
+color: white;
+font-size: 74.11px;
+font-family: Inter;
+font-weight: 700;
+word-wrap: break-word;
+}
+
+.start_box {
+width: 128.15px;
+height: 44px;
+left: 321.92px;
+top: 363.61px;
+position: absolute;
+background: #A4BDFD;
+border-radius: 3.86px;
+}
+
+.Start {
+width: 128.15px;
+height: 44px;
+left: 321.92px;
+top: 363.61px;
+position: absolute;
+text-align: center;
+color: white;
+font-size: 15.44px;
+font-family: Inter;
+font-weight: 700;
+word-wrap: break-word;
+}
