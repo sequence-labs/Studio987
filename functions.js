@@ -233,8 +233,78 @@ function getRandomWord() {
     return randomWord;
 }
 
+function adjustHintText() {
+    const hintEls = document.querySelectorAll('.hint_text');
 
-  
+    hintEls.forEach(el => {
+        const words = el.textContent.split(' ');
+        if (words.length > 4) {
+            el.classList.add('multi-line');
+        }
+    });
+}
+document.addEventListener('DOMContentLoaded', adjustHintText);
+
+
+// Get all input fields
+let inputs = document.querySelectorAll('.input');
+
+inputs.forEach((input, index) => {
+  input.setAttribute('maxlength', '1'); // Step 1
+
+  // Step 2 & 3
+  input.addEventListener('keyup', (e) => {
+    if(e.key === "Backspace" && index !== 0) {
+      inputs[index - 1].focus();
+    } else if(input.value && index !== inputs.length - 1) {
+      inputs[index + 1].focus();
+    }
+  });
+
+  // Step 4
+  input.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/[^A-Za-z]/g, "").toUpperCase();
+  });
+});
+
+// Step 5
+// Assuming we have 5 attempts and 5 ellipses.
+let attempts_collection = Array.from(document.querySelectorAll('.ellipse'));
+
+let attempts = 0;
+
+function markAttempt() {
+    if (attempts < attempts_collection.length) {
+        attempts_collection[attempts].style.backgroundColor = '#FF0000';
+        attempts++;
+    }
+    if (attempts === attempts_collection.length) {
+        alert("You've run out of attempts!");
+        window.location.reload();
+    }
+}
+
+let submitBtn = document.querySelector('.Submit');
+submitBtn.style.cursor = 'pointer'; // Style the "Submit" div to look like a button
+submitBtn.addEventListener('click', () => {
+  let inputWord = Array.from(inputs).map(input => input.value.toLowerCase()).join('');
+  if (inputWord === gameWord) {
+    alert('Congratulations! You guessed the word correctly.');
+  } else {
+    markAttempt();
+    if (attempts < attempts_collection.length) {
+      alert("Sorry, your guess is incorrect. Try again!");
+    }
+  }
+});
+
+window.onload = function() {
+    alert(`Welcome to the SEQUENCES game! Please input a letter in each box and press submit. The word is ${gameWord}.`);
+}
+
+
+
+
   let gameWord = getRandomWord();
   console.log("Word:", gameWord.word);
   console.log("Numbers:", gameWord.numberHints);
