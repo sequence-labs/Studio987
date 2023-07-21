@@ -65,7 +65,6 @@ let hints = {
         { answer: "Hotel", hint: "An establishment that provides lodging for travelers." }
     ],
     i: [
-        { answer: "Island", hint: "A piece of land surrounded by water." },
         { answer: "Igloo", hint: "A dome-shaped dwelling made of snow or ice." },
         { answer: "India", hint: "A country in South Asia." },
         { answer: "Ivory", hint: "A hard white material from elephant tusks." },
@@ -192,3 +191,48 @@ let hints = {
     ]
 };
 
+let updatedHints = {};
+
+function rearrangeHints(hints) {
+    // Collect all hints into a single batch
+    let allHints = Object.values(hints).flat();
+  
+    // Shuffle the hints randomly
+    shuffleArray(allHints);
+  
+    // Clear the updatedHints object
+    updatedHints = {};
+  
+    // Distribute the shuffled hints to respective letters
+    allHints.forEach(({ answer, hint }) => {
+      const letters = answer.toLowerCase().split('');
+      letters.forEach((letter) => {
+        if (!updatedHints[letter]) {
+          updatedHints[letter] = [];
+        }
+        updatedHints[letter].push({ answer, hint });
+      });
+    });
+  
+    // Check if each letter batch has at least 4 hints
+    for (const letter in updatedHints) {
+      const letterHints = updatedHints[letter];
+      if (letterHints.length < 4) {
+        const remainingHints = allHints.filter(({ answer }) => answer.toLowerCase().includes(letter));
+        shuffleArray(remainingHints);
+        updatedHints[letter] = letterHints.concat(remainingHints.slice(0, 4 - letterHints.length));
+      }
+    }
+  }
+  
+  // Helper function to shuffle an array randomly
+  function shuffleArray(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+  }
+  
+  // Call rearrangeHints to populate the global updatedHints variable
+  rearrangeHints(hints);
+  
