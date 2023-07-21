@@ -100,13 +100,13 @@ wordContainers.forEach((wordContainer) => {
       inputs.forEach((input) => {
         currentWord += input.value;
       });
-      console.log('currentWord:', currentWord); // for debugging
+      //console.log('currentWord:', currentWord); // for debugging
 
-      console.log("Game Word:", consoleLogs);
+      //console.log("Game Word:", consoleLogs);
 
       if (currentWord.length === inputs.length) {
         let hint = wordContainer.previousElementSibling.textContent.trim();
-        console.log('hint:', hint); // for debugging
+        //console.log('hint:', hint); // for debugging
 
         let answer = null;
         for (let i = 0; i < consoleLogs.length; i++) {
@@ -121,7 +121,7 @@ wordContainers.forEach((wordContainer) => {
           }
         }
 
-        console.log('answer:', answer); // for debugging
+        //console.log('answer:', answer); // for debugging
         if (currentWord === answer.toUpperCase()) {
           inputs.forEach((input) => {
             input.setAttribute('readonly', '');
@@ -134,8 +134,8 @@ wordContainers.forEach((wordContainer) => {
           let number = index + 1;
           let wordLetterElement = document.querySelector(`.wordoftheday.word-letter${number}`);
 
-          console.log('number:', number); // for debugging
-          console.log('wordLetterElement:', wordLetterElement); // for debugging
+          //console.log('number:', number); // for debugging
+          //console.log('wordLetterElement:', wordLetterElement); // for debugging
 
           if (wordLetterElement) {
             wordLetterElement.style.visibility = 'visible'; // change visibility to visible
@@ -165,7 +165,7 @@ function getRandomWord() {
 
   let hintDivs = document.querySelectorAll(".hint");
   // let answerDivs = document.querySelectorAll(".answer_letter");
-  console.log("Random Word:", randomWord);
+  //console.log("Random Word:", randomWord);
 
   for (let i = 0; i < randomWord.length; i++) {
     let letter = randomWord[i];
@@ -187,13 +187,13 @@ function getRandomWord() {
         // answerDivs[i].innerText = selectedHint.hint;
       }
 
-      console.log("Hint:", selectedHint.hint);
+      //console.log("Hint:", selectedHint.hint);
       consoleLogs.push({ [selectedHint.answer]: selectedHint.hint });
 
-      console.log("Answer:", selectedHint.answer);
+      //console.log("Answer:", selectedHint.answer);
     }
   }
-  console.log(updatedHints)
+  //console.log(updatedHints)
 
   return randomWord;
 }
@@ -251,8 +251,8 @@ $(document).ready(function() {
       updateWordFieldPositionsAfter();
       $(this).removeClass("active");
       $(this).css("cursor", "");
-      console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
-      console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
+      //console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
+      //console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
   
       if (wordFieldPositionsAfter[0]) {
         // Find the closest position in lockOnPositions
@@ -272,7 +272,7 @@ $(document).ready(function() {
         if (wordEntry) {
           wordEntry.finalPosition = closest.closestPosition;
         }
-        console.log("Final positions for word fields:", finalPositionsForWordFields);
+        //console.log("Final positions for word fields:", finalPositionsForWordFields);
       }
       
     }
@@ -335,7 +335,7 @@ $(document).ready(function() {
 });
 
 let submitBtn = document.getElementById('submit-btn');
-console.log(submitBtn);
+//console.log(submitBtn);
 
 
 document.querySelector('#submit-btn').addEventListener('click', function() {
@@ -350,7 +350,7 @@ document.querySelector('#submit-btn').addEventListener('click', function() {
     //}
 
     let userInput = input ? input.value : "";
-    console.log(`User input for ${wordField.word}: ${userInput}`);
+    //console.log(`User input for ${wordField.word}: ${userInput}`);
 
     // Assume that randomWord is an array where each element is a random word for corresponding word-field
     if (userInput.toUpperCase() === randomWord[index].toUpperCase()) {
