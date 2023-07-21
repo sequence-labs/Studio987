@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>SEQUENCES game</title>
+    <link href="./styles.css" rel="stylesheet" />
+</head>
+
+<body onload="getRandomWord()">
+    <div>
+        <div class="container">
+            <div class="frame15">
+                <div class="rectangle26"></div>
+                <span class="text2"><span>SEQUENCES</span></span>
+                <div class="help">
+                    <div class="ellipse1"></div>
+                    <span class="text4">?</span>
+                </div>
+                <div class="vertical">
+                    <span class="hint hint1"></span>
+                    <div class="word1 word-field">
+                        <div class="letter_box">
+                            <span class="rectangle word1_letter letter1">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle word1_letter letter2">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle word1_letter letter3">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle word1_letter letter4">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle word1_letter letter5">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="overlay"></div>
+                    </div>
+                    <span class="hint hint2"></span>
+                    <div class="word2 word-field">
+                        <div class="letter_box">
+                            <span class="rectangle" class="word2_letter letter1">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word2_letter letter2">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box letter3">
+                            <span class="rectangle" class="word2_letter letter3">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word2_letter letter4">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word2_letter letter5">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                    </div>
+                    <span class="hint hint3"></span>
+                    <div class="word3 word-field">
+                        <div class="letter_box">
+                            <span class="rectangle" class="word3_letter letter1">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word3_letter letter2">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box letter3">
+                            <span class="rectangle" class="word3_letter letter3">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word3_letter letter4">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word3_letter letter5">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                    </div>
+                    <span class="hint hint4"></span>
+                    <div class="word4 word-field">
+                        <div class="letter_box">
+                            <span class="rectangle" class="word4_letter letter1">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word4_letter letter2">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box letter3">
+                            <span class="rectangle" class="word4_letter letter3">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word4_letter letter4">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word4_letter letter5">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                    </div>
+                    <span class="hint hint5"></span>
+                    <div class="word5 word-field">
+                        <div class="letter_box">
+                            <span class="rectangle" class="word5_letter letter1">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word5_letter letter2">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box letter3">
+                            <span class="rectangle" class="word5_letter letter3">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word5_letter letter4">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                        <div class="letter_box">
+                            <span class="rectangle" class="word5_letter letter5">
+                                <input type="text" class="letter-textinput input" />
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="centerRowBoxes">
+                    <span class="answer_letter answer_letter1">Placeholder</span>
+                    <div class="wordoftheday word-letter1"></div>
+                    <span class="answer_letter answer_letter2">Placeholder</span>
+                    <div class="wordoftheday word-letter2"></div>
+                    <span class="answer_letter answer_letter3">Placeholder</span>
+                    <div class="wordoftheday word-letter3"></div>
+                    <span class="answer_letter answer_letter4">Placeholder</span>
+                    <div class="wordoftheday word-letter4"></div>
+                    <span class="answer_letter answer_letter5">Placeholder</span>
+                    <div class="wordoftheday word-letter5"></div>
+                </div>
+                <div class="submit">
+                    <span class="text_submit"><span>SUBMIT</span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- include jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- include your external JavaScript file -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="script.js"></script>
+    <script src="library.js"></script>
+
+
+</body>
