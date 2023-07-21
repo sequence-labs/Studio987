@@ -57,11 +57,39 @@ wordContainers.forEach((wordContainer) => {
   inputs.forEach((input, index) => {
     input.setAttribute('maxlength', '1');
 
-    input.addEventListener('keyup', (e) => {
-      if (e.key === "Backspace" && index !== 0) {
-        inputs[index - 1].focus();
-      } else if (input.value && index !== inputs.length - 1) {
-        inputs[index + 1].focus();
+    input.addEventListener('input', (e) => {
+      e.target.value = e.target.value.replace(/[^A-Za-z]/g, "").toUpperCase();
+
+      if (index !== inputs.length - 1) {
+        let nextInput = inputs[index + 1];
+        if (input.value) {
+          nextInput.focus();
+          nextInput.setSelectionRange(0, 0);
+        }
+      } 
+    });
+
+    input.addEventListener('keydown', (e) => {
+      if (e.key === "Backspace") {
+        if (index === inputs.length - 1) {
+          // Clear the last field when backspace is pressed
+          input.value = "";
+          if (!input.value && index !== 0) {
+            // Move back to the previous field if the current field is empty
+            e.preventDefault();
+            let prevInput = inputs[index - 1];
+            prevInput.focus();
+            prevInput.setSelectionRange(1, 1);
+          }
+        } else if (index !== 0 && !input.value) {
+          // Prevent default behavior of backspace key to avoid
+          // the input field being cleared when it's empty
+          e.preventDefault();
+
+          let prevInput = inputs[index - 1];
+          prevInput.focus();
+          prevInput.setSelectionRange(1, 1);
+        }
       }
     });
 
@@ -96,6 +124,7 @@ wordContainers.forEach((wordContainer) => {
         console.log('answer:', answer); // for debugging
         if (currentWord === answer.toUpperCase()) {
           inputs.forEach((input) => {
+            input.setAttribute('readonly', '');
             input.setAttribute('contenteditable', 'false');
           });
           wordContainer.classList.add('correct');
@@ -128,28 +157,29 @@ wordContainers.forEach((wordContainer) => {
 
 
 let consoleLogs = [];
+let randomWord;
 
 function getRandomWord() {
   let randomIndex = Math.floor(Math.random() * wordBank.length);
-  let randomWord = wordBank[randomIndex];
+  randomWord = wordBank[randomIndex];
 
   let hintDivs = document.querySelectorAll(".hint");
-  //   let answerDivs = document.querySelectorAll(".answer_letter");
+  // let answerDivs = document.querySelectorAll(".answer_letter");
   console.log("Random Word:", randomWord);
 
   for (let i = 0; i < randomWord.length; i++) {
     let letter = randomWord[i];
 
-    // Check if the letter exists in the hints object
-    if (hints.hasOwnProperty(letter)) {
-      let letterHints = hints[letter];
+    // Check if the letter exists in the updatedHints object
+    if (updatedHints.hasOwnProperty(letter)) {
+      let letterHints = updatedHints[letter];
       let hintIndex = Math.floor(Math.random() * letterHints.length);
       let selectedHint = letterHints[hintIndex];
 
       // Convert letterHints to an array and remove the selected hint
       letterHints = Object.values(letterHints);
       letterHints.splice(hintIndex, 1);
-      hints[letter] = letterHints;
+      updatedHints[letter] = letterHints;
 
       // Add the hint to the appropriate div
       if (hintDivs[i]) {
@@ -163,9 +193,11 @@ function getRandomWord() {
       console.log("Answer:", selectedHint.answer);
     }
   }
+  console.log(updatedHints)
 
   return randomWord;
 }
+
 
 // Get all the wordoftheday and letter_box elements
 const wordOfDayElements = document.querySelectorAll('.wordoftheday');
@@ -184,15 +216,25 @@ wordOfDayElements.forEach((wordElement, index) => {
   });
 });
 
-$(document).ready(function() {
-  var lockOnPositions = [
-    { letter_box: "box1", position: 139.5 },
-    { letter_box: "box2", position: 69.5 },
-    { letter_box: "box3", position: -0.5 },
-    { letter_box: "box4", position: -70.5 },
-    { letter_box: "box5", position: -140.5 }
-  ];
+let lockOnPositions = [
+  { letter_box: "box1", position: 139.5 },
+  { letter_box: "box2", position: 69.5 },
+  { letter_box: "box3", position: -0.5 },
+  { letter_box: "box4", position: -70.5 },
+  { letter_box: "box5", position: -140.5 }
+];
 
+
+ let finalPositionsForWordFields = [
+  { word: "word1", finalPosition: null },
+  { word: "word2", finalPosition: null },
+  { word: "word3", finalPosition: null },
+  { word: "word4", finalPosition: null },
+  { word: "word5", finalPosition: null }
+]; 
+
+
+$(document).ready(function() {
   $(".word-field").draggable({
     containment: ".frame15",
     scroll: false,
@@ -211,17 +253,31 @@ $(document).ready(function() {
       $(this).css("cursor", "");
       console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
       console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
-
-      // Find the closest position in lockOnPositions
-      var closestPosition = findClosestPosition(wordFieldPositionsAfter[0].left, lockOnPositions);
-
-      // Set the position of the dropped word-field to the closest position
-      $(this).css({ top: 0, left: closestPosition });
-
-      // Update the positions of word-field elements after setting the position
-      updateWordFieldPositionsAfter();
+  
+      if (wordFieldPositionsAfter[0]) {
+        // Find the closest position in lockOnPositions
+        var closest = findClosestPosition(wordFieldPositionsAfter[0].left, lockOnPositions);
+      
+        // Set the position of the dropped word-field to the closest position
+        $(this).css({ top: '0px', left: closest.closestPosition });
+      
+        // Update the positions of word-field elements after setting the position
+        updateWordFieldPositionsAfter();
+      
+        // Get the class name of the word (e.g., "word1")
+        let word = this.classList[0];
+      
+        // Find the corresponding entry in finalPositionsForWordFields and update the finalPosition
+        let wordEntry = finalPositionsForWordFields.find(entry => entry.word === word);
+        if (wordEntry) {
+          wordEntry.finalPosition = closest.closestPosition;
+        }
+        console.log("Final positions for word fields:", finalPositionsForWordFields);
+      }
+      
     }
   });
+  
 
   $(".wordoftheday").droppable({
     accept: ".word-field",
@@ -230,12 +286,12 @@ $(document).ready(function() {
       var droppedWordField = ui.draggable;
       var wordOfDayPosition = $(this).position();
       droppedWordField.css({
-        top: wordOfDayPosition.top,
+        top: '0px',  // force top to 0px
         left: wordOfDayPosition.left
       });
       droppedWordField.removeClass("active");
       updateWordFieldPositionsAfter();
-    }
+    }    
   });
 
   var wordFieldPositionsBefore = [];
@@ -253,22 +309,65 @@ $(document).ready(function() {
     wordFieldPositionsAfter = [];
     $(".word-field.active").each(function() {
       var position = $(this).position();
+      if (!position) {
+        position = { left: -0.5 };
+      }
       wordFieldPositionsAfter.push(position);
     });
-  }
+}
 
   function findClosestPosition(currentPosition, positions) {
     var closestPosition = positions[0].position;
     var closestDistance = Math.abs(currentPosition - closestPosition);
-
+    var closestIndex = 0;
+  
     for (var i = 1; i < positions.length; i++) {
       var distance = Math.abs(currentPosition - positions[i].position);
       if (distance < closestDistance) {
         closestDistance = distance;
         closestPosition = positions[i].position;
+        closestIndex = i;
       }
     }
-
-    return closestPosition;
+  
+    return {closestPosition, closestIndex};
   }
 });
+
+let submitBtn = document.getElementById('submit-btn');
+console.log(submitBtn);
+
+
+document.querySelector('#submit-btn').addEventListener('click', function() {
+  finalPositionsForWordFields.forEach((wordField, index) => {
+    // Get the corresponding .word-field element
+    let word = document.querySelector(`.${wordField.word}`);
+
+    // Get the input corresponding to the finalPosition
+    let input;
+    // if (wordField.finalPosition !== null) {
+      input = word.querySelector(`[data-pos="${wordField.finalPosition}"] .input`);
+    //}
+
+    let userInput = input ? input.value : "";
+    console.log(`User input for ${wordField.word}: ${userInput}`);
+
+    // Assume that randomWord is an array where each element is a random word for corresponding word-field
+    if (userInput.toUpperCase() === randomWord[index].toUpperCase()) {
+      // If they match, change the color of the letter boxes to green
+      changeInputColor("green");
+    } else {
+      // If they don't match, change the color of the letter boxes to red
+      changeInputColor("red");
+    }
+  });
+});
+
+function changeInputColor(color) {
+  //let wordElement = document.querySelector(`.${word}`); // get the corresponding word-field
+  let inputs = document.querySelectorAll('.wordoftheday'); // get all inputs inside this word-field
+
+  inputs.forEach(input => {
+    input.style.border = `1px solid ${color}`;
+  });
+}

@@ -52,7 +52,6 @@
   height: 65px;
   background: #3A3A3A;
   border-radius: 3.85px;
-  /* display: flex; */
   z-index: 1;
 }
 
@@ -73,6 +72,7 @@
   padding-bottom: var(--dl-space-space-halfunit);
   background-color: transparent;
   outline: none;
+  caret-shape: block;
 }
 
 .letter_box:hover {
@@ -124,12 +124,28 @@
   animation-iteration-count: 1;
 }
 
+/* .word-field {
+  cursor: move;
+} */
+
+.word-field.correct input {
+  user-select: none;
+  pointer-events: none;
+  background-color: transparent;
+  border: none;
+}
+
+.correct-answer .word-field {
+  cursor: move;
+}
+.correct-answer .rectangle {
+  cursor: move;
+}
 
 .word1 {
   gap: 5px;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 345px;
 }
 
 .word2 {
@@ -160,6 +176,12 @@
   justify-content: center;
 }
 
+.submit:hover {
+  background: rgba(0, 187, 74, 1);
+  opacity: 70%;
+  cursor: pointer; /* You should change cursor to pointer for better UX */
+}
+
 .submit {
   top: 570px;
   left: 0px;
@@ -169,18 +191,15 @@
   margin: auto;
   display: flex;
   position: absolute;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 1;
   background-color: rgba(0, 187, 74, 1);
   border-radius: 5px 5px 5px 5px;
 }
 
 .text_submit {
-  top: 6px;
-  left: 26px;
   color: rgba(255, 255, 255, 1);
-  height: auto;
-  position: absolute;
   font-size: 12px;
   font-style: Bold;
   text-align: center;
@@ -190,6 +209,7 @@
   font-stretch: normal;
   text-decoration: none;
 }
+
 
 .rectangle26 {
   top: 0px;
@@ -290,21 +310,6 @@
 .wordoftheday:hover {
   background: gray;
   opacity: 50%;
-}
-
-.word-field.correct input {
-  user-select: none;
-  pointer-events: none;
-  background-color: transparent;
-  border: none;
-}
-
-
-.correct-answer .word-field {
-  cursor: move;
-}
-.correct-answer .rectangle {
-  cursor: move;
 }
 
 .answer_letter {
