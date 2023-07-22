@@ -49,6 +49,20 @@ wordContainers.forEach((wordContainer) => {
   let $answerLetter = $(".answer_letter" + hintNumber);
   inputs.forEach((input, index) => {
     input.setAttribute('maxlength', '1');
+
+    input.addEventListener('click', () => {
+      // Start from the first empty input when clicked
+      let firstEmptyInput = Array.from(inputs).find((input) => !input.value);
+      if (firstEmptyInput) {
+        firstEmptyInput.focus();
+        firstEmptyInput.setSelectionRange(0, 0);
+      } else {
+        // If all inputs are filled, focus on the last input
+        let lastInput = inputs[inputs.length - 1];
+        lastInput.focus();
+        lastInput.setSelectionRange(0, 0);
+      }
+    });
     input.addEventListener('input', (e) => {
       e.target.value = e.target.value.replace(/[^A-Za-z]/g, "").toUpperCase();
       if (index !== inputs.length - 1) {
@@ -63,22 +77,27 @@ wordContainers.forEach((wordContainer) => {
       if (e.key === "Backspace") {
         if (index === inputs.length - 1) {
           // Clear the last field when backspace is pressed
-          input.value = "";
           if (!input.value && index !== 0) {
-            // Move back to the previous field if the current field is empty
             e.preventDefault();
             let prevInput = inputs[index - 1];
             prevInput.focus();
             prevInput.setSelectionRange(1, 1);
           }
+          input.value = "";
         } else if (index !== 0 && !input.value) {
-          /* Prevent default behavior of backspace key to avoid
-          the input field being cleared when it's empty*/
+          // Prevent default behavior of backspace key to avoid
+          // the input field being cleared when it's empty
           e.preventDefault();
 
           let prevInput = inputs[index - 1];
           prevInput.focus();
           prevInput.setSelectionRange(1, 1);
+        } else {
+          // Delete the content of the current input field and move back to the previous one
+          input.value = "";
+          let prevInput = inputs[index - 1];
+          prevInput.focus();
+          prevInput.setSelectionRange(0, 0);
         }
       }
     });
