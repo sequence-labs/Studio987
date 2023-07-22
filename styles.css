@@ -124,10 +124,6 @@
   animation-iteration-count: 1;
 }
 
-/* .word-field {
-  cursor: move;
-} */
-
 .word-field.correct input {
   user-select: none;
   pointer-events: none;
@@ -135,9 +131,14 @@
   border: none;
 }
 
+.word-field {
+  pointer-events: auto;
+}
+
 .correct-answer .word-field {
   cursor: move;
 }
+
 .correct-answer .rectangle {
   cursor: move;
 }
@@ -179,7 +180,8 @@
 .submit:hover {
   background: rgba(0, 187, 74, 1);
   opacity: 70%;
-  cursor: pointer; /* You should change cursor to pointer for better UX */
+  cursor: pointer;
+  /* You should change cursor to pointer for better UX */
 }
 
 .submit {
@@ -303,10 +305,11 @@
   border: 1px solid rgba(255, 255, 255, 1);
   border-radius: 4px;
   background-color: transparent;
-  pointer-events: none; 
+  pointer-events: none;
   z-index: 1;
-  visibility: hidden; 
+  visibility: hidden;
 }
+
 .wordoftheday:hover {
   background: gray;
   opacity: 50%;
