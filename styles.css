@@ -1,3 +1,13 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Add the background color to the body element */
+body {
+  background-color: rgba(41, 41, 41, 1);
+}
+
 .container {
   width: 100%;
   display: flex;
@@ -15,10 +25,9 @@
   position: absolute;
   align-items: flex-start;
   flex-shrink: 0;
-  background-color: rgba(41, 41, 41, 1);
 }
 
-.vertical {
+.board {
   gap: 5px;
   top: 136px;
   left: 0px;
