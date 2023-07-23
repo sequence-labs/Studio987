@@ -72,6 +72,11 @@ wordContainers.forEach((wordContainer) => {
           nextInput.setSelectionRange(0, 0);
         }
       }
+      if (checkAllWordsGuessed()) {
+        submitBtn.style.visibility = 'visible';
+      } else {
+        submitBtn.style.visibility = 'hidden';
+      }
     });
     input.addEventListener('keydown', (e) => {
       if (e.key === "Backspace") {
@@ -216,7 +221,7 @@ let finalPositionsForWordFields = [
 ];
 $(document).ready(function () {
   $(".word-field").draggable({
-    containment: ".frame15",
+    containment: ".game-frame",
     scroll: false,
     axis: "x",
     start: function () {
@@ -340,3 +345,48 @@ function changeInputColor(color) {
     input.style.border = `1px solid ${color}`;
   });
 }
+
+function checkAllWordsGuessed() {
+  let allWordsGuessed = true;
+  wordContainers.forEach((wordContainer, index) => {
+    let inputs = wordContainer.querySelectorAll('.input');
+    let currentWord = '';
+    inputs.forEach((input) => {
+      currentWord += input.value;
+    });
+    let hint = wordContainer.previousElementSibling.textContent.trim();
+    let answer = null;
+    for (let i = 0; i < consoleLogs.length; i++) {
+      let log = consoleLogs[i];
+      let logKeys = Object.keys(log);
+      let logValues = Object.values(log);
+      if (logValues.includes(hint)) {
+        let valueIndex = logValues.indexOf(hint);
+        answer = logKeys[valueIndex];
+        break;
+      }
+    }
+    if (currentWord.toUpperCase() !== answer.toUpperCase()) {
+      allWordsGuessed = false;
+    }
+  });
+  return allWordsGuessed;
+}
+
+// Function to check if the user is on a mobile device
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Function to add or remove mobile class based on the device
+function handleMobileClass() {
+  if (isMobileDevice()) {
+    document.body.classList.add('mobile');
+  } else {
+    document.body.classList.remove('mobile');
+  }
+}
+
+// Check if the user is on a mobile device when the page loads and on window resize
+document.addEventListener('DOMContentLoaded', handleMobileClass);
+window.addEventListener('resize', handleMobileClass);
