@@ -4,33 +4,54 @@ $(document).ready(function () {
     var $hint = $(".hint" + hintNumber);
     var $answerLetter = $(".answer_letter" + hintNumber);
     var hoverTimeout;
-    $(this).hover(function () {
-      // This will be executed when the mouse enters the word field or wordoftheday
+    var isTouchDevice = ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0);
+
+    // Helper function to show the hint and answer letter
+    function showHintAndAnswer() {
       if (!$(this).hasClass('correct')) {
         clearTimeout(hoverTimeout);
         $hint.show(300);
         $answerLetter.show(300);
       }
-    }, function () {
-      // This will be executed when the mouse leaves the word field or wordoftheday
+    }
+
+    // Helper function to hide the hint and answer letter
+    function hideHintAndAnswer() {
       if (!$(this).hasClass('correct') && !$(this).hasClass('clicked')) {
         hoverTimeout = setTimeout(function () {
           $hint.hide(300);
           $answerLetter.hide(300);
         }, 200);
       }
-    }).click(function () {
-      // On click, remove 'clicked' class from all fields and hide their hints and answer letters
-      if (!$(this).hasClass('correct')) {
-        $('.clicked').removeClass('clicked').prev('.hint').hide(300);
-        $('.answer_letter').hide(300);
-        // Then add 'clicked' class to the clicked field and show its hint and answer letter
-        $(this).addClass('clicked');
-        $hint.show(300);
-        $answerLetter.show(300);
-      }
-    });
+    }
+
+    // Handle hover and touch events
+    if (isTouchDevice) {
+      $(this).on('touchstart', function (e) {
+        e.preventDefault();
+        if ($(this).hasClass('clicked')) {
+          $(this).removeClass('clicked');
+          $hint.hide(300);
+          $answerLetter.hide(300);
+        } else {
+          $('.clicked').removeClass('clicked').prev('.hint').hide(300);
+          $('.answer_letter').hide(300);
+          $(this).addClass('clicked');
+          showHintAndAnswer.call(this);
+        }
+      });
+    } else {
+      $(this).hover(showHintAndAnswer, hideHintAndAnswer).click(function () {
+        if (!$(this).hasClass('correct')) {
+          $('.clicked').removeClass('clicked').prev('.hint').hide(300);
+          $('.answer_letter').hide(300);
+          $(this).addClass('clicked');
+          showHintAndAnswer.call(this);
+        }
+      });
+    }
   });
+
   // Hide the hint and remove 'clicked' class when clicking outside
   $(document).click(function (e) {
     if (!$(e.target).closest('.word-field, .answer_letter, .wordoftheday').length) {
