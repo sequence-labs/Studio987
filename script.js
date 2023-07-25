@@ -233,6 +233,13 @@ let lockOnPositions = [
   { letter_box: "box4", position: -70.5 },
   { letter_box: "box5", position: -140.5 }
 ];
+let lockOnPositionsForMobile = [
+  { letter_box: "box1", position: 320 },
+  { letter_box: "box2", position: 160 },
+  { letter_box: "box3", position: -0 },
+  { letter_box: "box4", position: -160 },
+  { letter_box: "box5", position: -320 }
+];
 let finalPositionsForWordFields = [
   { word: "word1", finalPosition: null },
   { word: "word2", finalPosition: null },
@@ -241,8 +248,15 @@ let finalPositionsForWordFields = [
   { word: "word5", finalPosition: null }
 ];
 $(document).ready(function () {
+    var isMobile = $('body').hasClass('mobile');
+    let positionLocking
+    if (isMobile = true) {
+      positionLocking = lockOnPositionsForMobile
+    } else {
+      positionLocking = lockOnPositions
+    }
   $(".word-field").draggable({
-    containment: ".game-frame",
+    //containment: ".game-frame",
     scroll: false,
     axis: "x",
     start: function () {
@@ -260,7 +274,7 @@ $(document).ready(function () {
       //console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
       //console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
       if (wordFieldPositionsAfter[0]) {
-        var closest = findClosestPosition(wordFieldPositionsAfter[0].left, lockOnPositions);
+        var closest = findClosestPosition(wordFieldPositionsAfter[0].left, positionLocking);
         $(this).css({ top: '0px', left: closest.closestPosition });
         updateWordFieldPositionsAfter();
         let word = this.classList[0];
@@ -411,3 +425,12 @@ function handleMobileClass() {
 // Check if the user is on a mobile device when the page loads and on window resize
 document.addEventListener('DOMContentLoaded', handleMobileClass);
 window.addEventListener('resize', handleMobileClass);
+
+document.addEventListener("DOMContentLoaded", function() {
+  if(document.body.classList.contains('mobile')) {
+    var metaTag = document.createElement('meta');
+    metaTag.name = "viewport";
+    metaTag.content = "width=device-width, initial-scale=.4, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"; // Added shrink-to-fit attribute
+    document.getElementsByTagName('head')[0].appendChild(metaTag);
+  }
+});
