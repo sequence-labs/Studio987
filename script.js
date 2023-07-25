@@ -248,12 +248,13 @@ let finalPositionsForWordFields = [
   { word: "word5", finalPosition: null }
 ];
 $(document).ready(function () {
-    var isMobile = $('body').hasClass('mobile');
     let positionLocking
-    if (isMobile = true) {
+    if ($('body').hasClass('mobile')) {
       positionLocking = lockOnPositionsForMobile
+      // console.log("Mobile")
     } else {
       positionLocking = lockOnPositions
+      // console.log("Desktop")
     }
   $(".word-field").draggable({
     //containment: ".game-frame",
