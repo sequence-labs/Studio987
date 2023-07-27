@@ -330,8 +330,9 @@ body {
   width: 344px;
   height: auto;
   font-size: 12px;
-  font-style: bold;
+  font-style: Bold;
   text-align: center;
+  font-family: Inter;
   font-weight: 700;
   line-height: normal;
   font-stretch: normal;
@@ -422,17 +423,23 @@ body.mobile {
   }
 
   .centerRowBoxes {
-    gap: 4px;
+    gap: 10px;
     top: 20%;
     width: 150px;
   }
 
   .wordoftheday {
     width: 150px;
-    height: 150px;
+    height: 148px;
+    gap: 10px;
   }
 
   .answer_letter {
     width: 770px;
+    font-size: 36px;
   }
+  .word-letter1{
+    margin-top: 0px;
+  }
+  
 }

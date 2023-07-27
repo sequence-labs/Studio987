@@ -82,7 +82,6 @@ let hints = {
     ],
     g: [
         { answer: "Globe", hint: "A spherical representation of the Earth." },
-        { answer: "Guitar", hint: "A stringed musical instrument." },
         { answer: "Grass", hint: "Vegetation consisting of narrow leaves." },
         { answer: "Giant", hint: "An imaginary creature of great size." },
         { answer: "Glove", hint: "A covering for the hand." },

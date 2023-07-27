@@ -184,7 +184,8 @@ function getRandomWord() {
   let randomIndex = Math.floor(Math.random() * wordBank.length);
   randomWord = wordBank[randomIndex];
   let hintDivs = document.querySelectorAll(".hint");
-  //console.log("Random Word:", randomWord);
+  let answerDivs = document.querySelectorAll(".answer_letter");
+  console.log("Random Word:", randomWord);
   for (let i = 0; i < randomWord.length; i++) {
     let letter = randomWord[i];
     // Check if the letter exists in the updatedHints object
@@ -199,11 +200,11 @@ function getRandomWord() {
       // Add the hint to the appropriate div
       if (hintDivs[i]) {
         hintDivs[i].innerText = selectedHint.hint;
-        // answerDivs[i].innerText = selectedHint.hint;
+        answerDivs[i].innerText = selectedHint.hint;
       }
-      //console.log("Hint:", selectedHint.hint);
+      console.log("Hint:", selectedHint.hint);
       consoleLogs.push({ [selectedHint.answer]: selectedHint.hint });
-      //console.log("Answer:", selectedHint.answer);
+      console.log("Answer:", selectedHint.answer);
     }
   }
   //console.log(updatedHints)
@@ -236,7 +237,7 @@ let lockOnPositions = [
 let lockOnPositionsForMobile = [
   { letter_box: "box1", position: 320 },
   { letter_box: "box2", position: 160 },
-  { letter_box: "box3", position: -0 },
+  { letter_box: "box3", position: -10 },
   { letter_box: "box4", position: -160 },
   { letter_box: "box5", position: -320 }
 ];
@@ -248,14 +249,16 @@ let finalPositionsForWordFields = [
   { word: "word5", finalPosition: null }
 ];
 $(document).ready(function () {
-    let positionLocking
-    if ($('body').hasClass('mobile')) {
-      positionLocking = lockOnPositionsForMobile
-      // console.log("Mobile")
-    } else {
-      positionLocking = lockOnPositions
-      // console.log("Desktop")
-    }
+  let positionLocking;
+  // Check if device is mobile
+  if (/Mobi|Android/i.test(navigator.userAgent)) {
+    positionLocking = lockOnPositionsForMobile;
+    // console.log("Mobile");
+    // console.log("lockOnPositionsForMobile:", lockOnPositionsForMobile)
+  } else {
+    positionLocking = lockOnPositions;
+    // console.log("Desktop");
+  }
   $(".word-field").draggable({
     //containment: ".game-frame",
     scroll: false,
@@ -272,8 +275,8 @@ $(document).ready(function () {
       updateWordFieldPositionsAfter();
       $(this).removeClass("active");
       $(this).css("cursor", "");
-      //console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
-      //console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
+      // console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
+      // console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
       if (wordFieldPositionsAfter[0]) {
         var closest = findClosestPosition(wordFieldPositionsAfter[0].left, positionLocking);
         $(this).css({ top: '0px', left: closest.closestPosition });
@@ -283,7 +286,7 @@ $(document).ready(function () {
         if (wordEntry) {
           wordEntry.finalPosition = closest.closestPosition;
         }
-        //console.log("Final positions for word fields:", finalPositionsForWordFields);
+        // console.log("Final positions for word fields:", finalPositionsForWordFields);
       }
     }
   });
@@ -354,12 +357,19 @@ let submitBtn = document.getElementById('submit-btn');
 //console.log(submitBtn);
 document.querySelector('#submit-btn').addEventListener('click', function () {
   finalPositionsForWordFields.forEach((wordField, index) => {
+    let className;
+    // Check if device is mobile
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+      className = 'data-pos-mobile';
+    } else {
+      className = 'data-pos';
+    }
     // Get the corresponding .word-field element
     let word = document.querySelector(`.${wordField.word}`);
     // Get the input corresponding to the finalPosition
     let input;
     // if (wordField.finalPosition !== null) {
-    input = word.querySelector(`[data-pos="${wordField.finalPosition}"] .input`);
+    input = word.querySelector(`[${className}="${wordField.finalPosition}"] .input`);
     //}
     let userInput = input ? input.value : "";
     //console.log(`User input for ${wordField.word}: ${userInput}`);
