@@ -82,7 +82,6 @@ let hints = {
     ],
     g: [
         { answer: "Globe", hint: "A spherical representation of the Earth." },
-        { answer: "Guitar", hint: "A stringed musical instrument." },
         { answer: "Grass", hint: "Vegetation consisting of narrow leaves." },
         { answer: "Giant", hint: "An imaginary creature of great size." },
         { answer: "Glove", hint: "A covering for the hand." },
@@ -230,7 +229,6 @@ let hints = {
         { answer: "Socks", hint: "Garments worn on the feet." },
         { answer: "Spoon", hint: "An eating or cooking utensil with a small shallow bowl." },
         { answer: "Storm", hint: "A violent disturbance of the atmosphere." },
-        { answer: "Sunset", hint: "The time when the sun disappears below the horizon." },
         { answer: "Silver", hint: "A precious metal with symbol Ag." },
         { answer: "Snail", hint: "A slow-moving mollusk with a spiral shell." },
         { answer: "Sword", hint: "A weapon with a long blade." },
