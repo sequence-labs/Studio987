@@ -445,3 +445,60 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementsByTagName('head')[0].appendChild(metaTag);
   }
 });
+
+window.addEventListener('load', () => {
+  toggleHelpMenu();
+});
+
+function toggleHelpMenu() {
+  const helpButton = document.querySelector('.help');
+  const helpMenu = document.querySelector('.help_menu');
+  const exitButton = document.querySelector('.exit_menu');
+
+  // Add event listeners for click and touch events
+  helpButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      helpMenu.style.display = 'block';
+  });
+  helpButton.addEventListener('touchend', (event) => {
+      event.stopPropagation();
+      helpMenu.style.display = 'block';
+  });
+  exitButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      helpMenu.style.display = 'none';
+  });
+  exitButton.addEventListener('touchend', (event) => {
+      event.stopPropagation();
+      helpMenu.style.display = 'none';
+  });
+  document.addEventListener('click', () => {
+      helpMenu.style.display = 'none';
+  });
+  document.addEventListener('touchend', () => {
+      helpMenu.style.display = 'none';
+  });
+  helpMenu.addEventListener('click', (event) => {
+      event.stopPropagation();
+  });
+  helpMenu.addEventListener('touchend', (event) => {
+      event.stopPropagation();
+  });
+}
+
+window.addEventListener('load', () => {
+  returnHome();
+});
+
+function returnHome() {
+  const homeButton = document.querySelector('.HomeIcon');
+
+  // Add event listeners for click and touch events
+  homeButton.addEventListener('click', () => {
+    window.location.href = 'welcome.html';
+  });
+  homeButton.addEventListener('touchend', () => {
+    window.location.href = 'welcome.html';
+  });
+}
+

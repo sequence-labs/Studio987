@@ -8,6 +8,18 @@ body {
   background-color: rgba(41, 41, 41, 1);
 }
 
+.HomeIcon {
+  width: 30px;
+  height: 32px;
+  flex-shrink: 0;
+  left: 12px;
+  top: 8px;
+  position: absolute;
+  cursor: pointer !important;
+  z-index: 1;
+}
+
+
 .game-container {
   width: 100%;
   display: flex;
@@ -261,6 +273,7 @@ body {
   align-items: flex-start;
   flex-shrink: 1;
   right: 2%;
+  cursor: pointer;
 }
 
 .helpCircle {
