@@ -364,6 +364,12 @@ body.mobile {
     top: 20%;
     width: 770px;
   }
+  .HomeIcon {
+    width: 40px;
+    height: 42px;
+    top: 30px;
+    left: 4%;
+  }
 
   .topBar {
     height: 96px;

@@ -495,10 +495,21 @@ function returnHome() {
 
   // Add event listeners for click and touch events
   homeButton.addEventListener('click', () => {
-    window.location.href = 'welcome.html';
+    window.location.href = 'index.html';
   });
   homeButton.addEventListener('touchend', () => {
-    window.location.href = 'welcome.html';
+    window.location.href = 'index.html';
   });
 }
 
+// Check if the body has the "mobile" class and update SVG width and height accordingly
+window.addEventListener('DOMContentLoaded', () => {
+  const svgElement = document.querySelector('.HomeIcon svg');
+  if (document.body.classList.contains('mobile')) {
+    svgElement.setAttribute('width', '40');
+    svgElement.setAttribute('height', '42');
+  } else {
+    svgElement.setAttribute('width', '30');
+    svgElement.setAttribute('height', '32');
+  }
+});
