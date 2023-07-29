@@ -93,6 +93,17 @@ wordContainers.forEach((wordContainer) => {
       } else {
         submitBtn.style.visibility = 'hidden';
       }
+      if(e.target.value){
+        e.target.style.border = '1px solid lightgray';
+        e.target.dataset.animation = 'pop'; // change data-animation to 'pop'
+      } else {
+        e.target.style.border = '';
+        e.target.dataset.animation = 'idle'; // change data-animation to 'idle'
+      }
+    });
+    input.addEventListener('animationend', () => {
+      // After animation ends, set animation state back to idle
+      input.dataset.animation = 'idle';
     });
     input.addEventListener('keydown', (e) => {
       if (e.key === "Backspace") {
@@ -100,17 +111,21 @@ wordContainers.forEach((wordContainer) => {
         if (index === inputs.length - 1 && input.value) {
           // if it is the last input and has a value, clear the value
           input.value = "";
+          input.style.border = '';  // remove the border
         } else if (index !== 0) {
           // if it is not the first input, move to the previous input and clear the value
           let prevInput = inputs[index - 1];
           prevInput.value = "";
           prevInput.focus();
+          prevInput.style.border = '';  // remove the border
         } else if (index === 0) {
           // if it is the first input, just clear the value
           input.value = "";
+          input.style.border = '';  // remove the border
         }
       }
     });
+    
 
     input.addEventListener('keyup', (e) => {
       if (e.key === "Backspace" && input.value === "") {
@@ -144,6 +159,7 @@ wordContainers.forEach((wordContainer) => {
           inputs.forEach((input) => {
             input.setAttribute('readonly', '');
             input.setAttribute('contenteditable', 'false');
+            input.style.border = '';
           });
           wordContainer.classList.add('correct');
           wordContainer.classList.add('correct-answer');
