@@ -8,6 +8,18 @@ body {
   background-color: rgba(41, 41, 41, 1);
 }
 
+.HomeIcon {
+  width: 30px;
+  height: 32px;
+  flex-shrink: 0;
+  left: 12px;
+  top: 8px;
+  position: absolute;
+  cursor: pointer !important;
+  z-index: 1;
+}
+
+
 .game-container {
   width: 100%;
   display: flex;
@@ -82,7 +94,30 @@ body {
   background-color: transparent;
   outline: none;
   caret-shape: block;
+  /* caret-color: transparent; */
 }
+
+input[data-animation='pop'] {
+  animation-name: PopIn;
+  animation-duration: 100ms;
+}
+
+input[data-animation='idle'] {
+  animation-name: none;
+}
+
+@keyframes PopIn {
+  from {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+
+  40% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+}
+
 
 .letter_box:hover {
   background: gray;
@@ -261,6 +296,7 @@ body {
   align-items: flex-start;
   flex-shrink: 1;
   right: 2%;
+  cursor: pointer;
 }
 
 .helpCircle {
@@ -350,6 +386,12 @@ body.mobile {
     gap: 10px;
     top: 20%;
     width: 770px;
+  }
+  .HomeIcon {
+    width: 40px;
+    height: 42px;
+    top: 30px;
+    left: 4%;
   }
 
   .topBar {

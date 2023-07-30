@@ -72,16 +72,12 @@ wordContainers.forEach((wordContainer) => {
     input.setAttribute('maxlength', '1');
 
     input.addEventListener('click', () => {
-      // Start from the first empty input when clicked
       let firstEmptyInput = Array.from(inputs).find((input) => !input.value);
       if (firstEmptyInput) {
         firstEmptyInput.focus();
-        firstEmptyInput.setSelectionRange(0, 0);
       } else {
-        // If all inputs are filled, focus on the last input
         let lastInput = inputs[inputs.length - 1];
         lastInput.focus();
-        lastInput.setSelectionRange(0, 0);
       }
     });
     input.addEventListener('input', (e) => {
@@ -90,7 +86,6 @@ wordContainers.forEach((wordContainer) => {
         let nextInput = inputs[index + 1];
         if (input.value) {
           nextInput.focus();
-          nextInput.setSelectionRange(0, 0);
         }
       }
       if (checkAllWordsGuessed()) {
@@ -98,33 +93,43 @@ wordContainers.forEach((wordContainer) => {
       } else {
         submitBtn.style.visibility = 'hidden';
       }
+      if(e.target.value){
+        e.target.style.border = '1px solid lightgray';
+        e.target.dataset.animation = 'pop'; // change data-animation to 'pop'
+      } else {
+        e.target.style.border = '';
+        e.target.dataset.animation = 'idle'; // change data-animation to 'idle'
+      }
+    });
+    input.addEventListener('animationend', () => {
+      // After animation ends, set animation state back to idle
+      input.dataset.animation = 'idle';
     });
     input.addEventListener('keydown', (e) => {
       if (e.key === "Backspace") {
-        if (index === inputs.length - 1) {
-          // Clear the last field when backspace is pressed
-          if (!input.value && index !== 0) {
-            e.preventDefault();
-            let prevInput = inputs[index - 1];
-            prevInput.focus();
-            prevInput.setSelectionRange(1, 1);
-          }
+        e.preventDefault();
+        if (index === inputs.length - 1 && input.value) {
+          // if it is the last input and has a value, clear the value
           input.value = "";
-        } else if (index !== 0 && !input.value) {
-          // Prevent default behavior of backspace key to avoid
-          // the input field being cleared when it's empty
-          e.preventDefault();
-
+          input.style.border = '';  // remove the border
+        } else if (index !== 0) {
+          // if it is not the first input, move to the previous input and clear the value
           let prevInput = inputs[index - 1];
+          prevInput.value = "";
           prevInput.focus();
-          prevInput.setSelectionRange(1, 1);
-        } else {
-          // Delete the content of the current input field and move back to the previous one
+          prevInput.style.border = '';  // remove the border
+        } else if (index === 0) {
+          // if it is the first input, just clear the value
           input.value = "";
-          let prevInput = inputs[index - 1];
-          prevInput.focus();
-          prevInput.setSelectionRange(0, 0);
+          input.style.border = '';  // remove the border
         }
+      }
+    });
+    
+
+    input.addEventListener('keyup', (e) => {
+      if (e.key === "Backspace" && input.value === "") {
+        input.value = "";
       }
     });
     input.addEventListener('input', (e) => {
@@ -160,6 +165,7 @@ wordContainers.forEach((wordContainer) => {
           inputs.forEach((input) => {
             input.setAttribute('readonly', '');
             input.setAttribute('contenteditable', 'false');
+            input.style.border = '';
           });
           wordContainer.classList.add('correct');
           wordContainer.classList.add('correct-answer');
@@ -373,20 +379,26 @@ document.querySelector('#submit-btn').addEventListener('click', function () {
     // Get the corresponding .word-field element
     let word = document.querySelector(`.${wordField.word}`);
     // Get the input corresponding to the finalPosition
-    let input;
-    // if (wordField.finalPosition !== null) {
-    input = word.querySelector(`[${className}="${wordField.finalPosition}"] .input`);
-    //}
+    let input = word.querySelector(`[${className}="${wordField.finalPosition}"] .input`);
     let userInput = input ? input.value : "";
     //console.log(`User input for ${wordField.word}: ${userInput}`);
     // Assume that randomWord is an array where each element is a random word for corresponding word-field
     if (userInput.toUpperCase() === randomWord[index].toUpperCase()) {
       // If they match, change the color of the letter boxes to green
       changeInputColor("green");
+      const correctModal = document.querySelector('.correct_answer');
+      correctModal.style.display = 'block';
+      // Disable dragging for .word-field elements
+      $('.word-field').draggable('disable');
+      $('.correct-answer .word-field').css('cursor', 'default');
+      $('.correct-answer .rectangle').css('cursor', 'default');
     } else {
       // If they don't match, change the color of the letter boxes to red
       changeInputColor("red");
+      const correctModal = document.querySelector('.correct_answer');
+      correctModal.style.display = 'none';
     }
+    
   });
 });
 
@@ -451,5 +463,86 @@ document.addEventListener("DOMContentLoaded", function() {
     metaTag.name = "viewport";
     metaTag.content = "width=device-width, initial-scale=.4, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"; // Added shrink-to-fit attribute
     document.getElementsByTagName('head')[0].appendChild(metaTag);
+  }
+});
+
+window.addEventListener('load', () => {
+  toggleHelpMenu();
+});
+
+function toggleHelpMenu() {
+  const helpButton = document.querySelector('.help');
+  const helpMenu = document.querySelector('.help_menu');
+  const exitButton = document.querySelector('.exit_menu');
+
+  // Add event listeners for click and touch events
+  helpButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      helpMenu.style.display = 'block';
+  });
+  helpButton.addEventListener('touchend', (event) => {
+      event.stopPropagation();
+      helpMenu.style.display = 'block';
+  });
+  exitButton.addEventListener('click', (event) => {
+      event.stopPropagation();
+      helpMenu.style.display = 'none';
+  });
+  exitButton.addEventListener('touchend', (event) => {
+      event.stopPropagation();
+      helpMenu.style.display = 'none';
+  });
+  document.addEventListener('click', () => {
+      helpMenu.style.display = 'none';
+  });
+  document.addEventListener('touchend', () => {
+      helpMenu.style.display = 'none';
+  });
+  helpMenu.addEventListener('click', (event) => {
+      event.stopPropagation();
+  });
+  helpMenu.addEventListener('touchend', (event) => {
+      event.stopPropagation();
+  });
+}
+
+window.addEventListener('load', () => {
+  returnHome();
+});
+
+function returnHome() {
+  const homeButton = document.querySelector('.play');
+
+  // Add event listeners for click and touch events
+  homeButton.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+  homeButton.addEventListener('touchend', () => {
+    window.location.href = 'index.html';
+  });
+}
+
+
+function playAgain() {
+  const homeButton = document.querySelector('.HomeIcon');
+
+  // Add event listeners for click and touch events
+  homeButton.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+  homeButton.addEventListener('touchend', () => {
+    window.location.href = 'index.html';
+  });
+}
+
+// Check if the body has the "mobile" class and update SVG width and height accordingly
+window.addEventListener('DOMContentLoaded', () => {
+  const svgElement = document.querySelector('.HomeIcon svg');
+  if (document.body.classList.contains('mobile')) {
+    svgElement.setAttribute('width', '40');
+    svgElement.setAttribute('height', '42');
+  } else {
+    svgElement.setAttribute('width', '30');
+    svgElement.setAttribute('height', '32');
   }
 });
