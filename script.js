@@ -380,10 +380,19 @@ document.querySelector('#submit-btn').addEventListener('click', function () {
     if (userInput.toUpperCase() === randomWord[index].toUpperCase()) {
       // If they match, change the color of the letter boxes to green
       changeInputColor("green");
+      const correctModal = document.querySelector('.correct_answer');
+      correctModal.style.display = 'block';
+      // Disable dragging for .word-field elements
+      $('.word-field').draggable('disable');
+      $('.correct-answer .word-field').css('cursor', 'default');
+      $('.correct-answer .rectangle').css('cursor', 'default');
     } else {
       // If they don't match, change the color of the letter boxes to red
       changeInputColor("red");
+      const correctModal = document.querySelector('.correct_answer');
+      correctModal.style.display = 'none';
     }
+    
   });
 });
 
@@ -494,6 +503,19 @@ window.addEventListener('load', () => {
 });
 
 function returnHome() {
+  const homeButton = document.querySelector('.play');
+
+  // Add event listeners for click and touch events
+  homeButton.addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+  homeButton.addEventListener('touchend', () => {
+    window.location.href = 'index.html';
+  });
+}
+
+
+function playAgain() {
   const homeButton = document.querySelector('.HomeIcon');
 
   // Add event listeners for click and touch events

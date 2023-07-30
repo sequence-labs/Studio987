@@ -1,0 +1,143 @@
+.correct_answer { 
+	background-color:rgba(32.00000189244747, 31.000000052154064, 31.000000052154064, 1);
+	width:350px;
+	height:349px;
+    border-radius: 8px;
+	position:absolute;
+    z-index: 2;
+    top: 19%;
+    display: none;
+}
+.message_container { 
+	width:255px;
+	height:225px;
+	position:absolute;
+	left:32px;
+	top:30px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 23.221px;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+}
+.congrats_image {
+    width: 102px;
+    height: 102px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.messages { 
+	width:163px;
+	height:99.77925872802734px;
+	position:absolute;
+	left:46px;
+	top:0px;
+}
+.correct_message_text { 
+    display: flex;
+    width: 150px;
+    height: 53.453px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #FFF;
+    text-align: center;
+    font-family: Inter;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.congratulations { 
+    display: flex;
+    width: 163px;
+    height: 18.327px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #00BB4B;
+    text-align: center;
+    font-family: Inter;
+    font-size: 19.754px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    left: 50%;
+    position: absolute;
+    transform: translateX(-50%);
+}
+.image_1 { 
+	width:102px;
+	height:102px;
+	position:absolute;
+	left:77px;
+	top:123px;
+	background-repeat:no-repeat;
+	background-size:cover;
+}
+.play { 
+	width:70px;
+	height:18.899999618530273px;
+	position:absolute;
+	left: 50%;
+    transform: translateX(-50%);
+	top:283px;
+    cursor: pointer;
+    
+}
+.play_again_button { 
+	border-radius: 3.5px;
+    background: #00BB4B;
+    width: 75px;
+    height: 20px;
+    flex-shrink: 0;
+	position:absolute;
+	left: 50%;
+    transform: translateX(-50%);
+	top:0px;
+    cursor: pointer;
+}
+.play_again { 
+	color:rgba(255, 255, 255, 1);
+	width:52px;
+	height:10px;
+	position:absolute;
+	left:8px;
+	top:4px;
+	font-family:Inter;
+	text-align:center;
+	font-size:8px;
+	letter-spacing:0;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+body.mobile .correct_answer {
+    top: 30%;
+    left: 50%;
+    height: 500px;
+    transform: translateX(-50%) scale(2.5);
+}
+body.mobile .play {
+    top: 400px;
+    transform: translateX(-50%) scale(1.5);
+    left: 50%;
+}
+body.mobile .congratulations {
+    left: 50%;
+    transform: translateX(-50%) scale(1.5);
+}
+body.mobile .image_1 {
+    top: 80%;
+    transform: scale(1.2);
+}
+body.mobile .correct_message_text {
+    top: 60%;
+    transform: translateX(-50%) scale(1.5);
+}

@@ -5,6 +5,7 @@
     <title>SEQUENCES game</title>
     <link href="./styles.css" rel="stylesheet" />
     <link href="./helpModal.css" rel="stylesheet" />
+    <link href="./playAgain.css" rel="stylesheet" />
     <script src="library.js"></script>
 </head>
 
@@ -15,8 +16,10 @@
                 <div class="topBar">
                     <div class="HomeIcon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="32" viewBox="0 0 30 32" fill="none">
-                            <path d="M16.7175 0.672252C15.7538 -0.224084 14.2462 -0.224084 13.2825 0.672252L1.1737 11.9342C0.4245 12.631 0 13.6005 0 14.6147V28.3111C0 30.3483 1.67893 32 3.75 32H7.5C9.57107 32 11.25 30.3483 11.25 28.3111V22.1629C11.25 21.4838 11.8096 20.9333 12.5 20.9333H17.5C18.1904 20.9333 18.75 21.4838 18.75 22.1629V28.3111C18.75 30.3483 20.429 32 22.5 32H26.25C28.321 32 30 30.3483 30 28.3111V14.6147C30 13.6005 29.5755 12.631 28.8263 11.9342L16.7175 0.672252Z" fill="white"/>
-                          </svg>
+                            <path
+                                d="M16.7175 0.672252C15.7538 -0.224084 14.2462 -0.224084 13.2825 0.672252L1.1737 11.9342C0.4245 12.631 0 13.6005 0 14.6147V28.3111C0 30.3483 1.67893 32 3.75 32H7.5C9.57107 32 11.25 30.3483 11.25 28.3111V22.1629C11.25 21.4838 11.8096 20.9333 12.5 20.9333H17.5C18.1904 20.9333 18.75 21.4838 18.75 22.1629V28.3111C18.75 30.3483 20.429 32 22.5 32H26.25C28.321 32 30 30.3483 30 28.3111V14.6147C30 13.6005 29.5755 12.631 28.8263 11.9342L16.7175 0.672252Z"
+                                fill="white" />
+                        </svg>
                     </div>
                     <span class="gameTitle">SEQUENCES</span>
                 </div>
@@ -295,7 +298,8 @@
                                 </div>
                             </div>
                             <div class="right_slider">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="77" viewBox="0 0 15 77" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="77" viewBox="0 0 15 77"
+                                    fill="none">
                                     <path
                                         d="M13.5 68.634C14.1667 69.0189 14.1667 69.9811 13.5 70.366L5.25 75.1292C4.58333 75.5141 3.75 75.0329 3.75 74.2631L3.75 64.7369C3.75 63.9671 4.58333 63.4859 5.25 63.8708L13.5 68.634Z"
                                         fill="white" />
@@ -308,7 +312,8 @@
                                 </svg>
                             </div>
                             <div class="left_slider">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="77" viewBox="0 0 15 77" fill="none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="15" height="77" viewBox="0 0 15 77"
+                                    fill="none">
                                     <path
                                         d="M1.5 70.366C0.833333 69.9811 0.833334 69.0189 1.5 68.634L9.75 63.8708C10.4167 63.4859 11.25 63.9671 11.25 64.7369L11.25 74.2631C11.25 75.0329 10.4167 75.5141 9.75 75.1292L1.5 70.366Z"
                                         fill="white" />
@@ -379,6 +384,20 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="correct_answer">
+                <div class="message_container">
+                    <div class="messages">
+                        <span class="congratulations">Congratulations!</span>
+                        <span class="correct_message_text">You guessed the hidden word correctly!</span>
+                    </div>
+                    <img src="assets/congrats.png" class="image_1" alt="congrats_image"></img>
+                </div>
+                <div class="play">
+                    <div class="play_again_button"></div>
+                    <span class="play_again">PLAY AGAIN</span>
+                </div>
+            </div>            
             </div>
         </div>
     </div>
