@@ -361,7 +361,7 @@ $(document).ready(function () {
 
 let submitBtn = document.getElementById('submit-btn');
 //console.log(submitBtn);
-document.querySelector('#submit-btn').addEventListener('click', function () {
+document.querySelector('#submit-btn').addEventListener('click', async function () {
   finalPositionsForWordFields.forEach((wordField, index) => {
     let className;
     // Check if device is mobile
@@ -377,22 +377,23 @@ document.querySelector('#submit-btn').addEventListener('click', function () {
     let userInput = input ? input.value : "";
     //console.log(`User input for ${wordField.word}: ${userInput}`);
     // Assume that randomWord is an array where each element is a random word for corresponding word-field
+    let currentStatus
     if (userInput.toUpperCase() === randomWord[index].toUpperCase()) {
       // If they match, change the color of the letter boxes to green
       changeInputColor("green");
-      const correctModal = document.querySelector('.correct_answer');
-      correctModal.style.display = 'block';
+      currentStatus = document.querySelector('.correct_answer');
+      currentStatus.style.display = 'block';
       // Disable dragging for .word-field elements
       $('.word-field').draggable('disable');
       $('.correct-answer .word-field').css('cursor', 'default');
       $('.correct-answer .rectangle').css('cursor', 'default');
-    } else {
+    } else (userInput.toUpperCase() !== randomWord[index].toUpperCase()); {
       // If they don't match, change the color of the letter boxes to red
       changeInputColor("red");
-      const correctModal = document.querySelector('.correct_answer');
-      correctModal.style.display = 'none';
+      currentStatus = document.querySelector('.correct_answer');
+      $('.word-field').draggable('ebable');
+      currentStatus.style.display = 'none';
     }
-    
   });
 });
 
