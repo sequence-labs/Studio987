@@ -281,8 +281,8 @@ $(document).ready(function () {
       updateWordFieldPositionsAfter();
       $(this).removeClass("active");
       $(this).css("cursor", "");
-      // console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
-      // console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
+      console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
+      console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
       if (wordFieldPositionsAfter[0]) {
         var closest = findClosestPosition(wordFieldPositionsAfter[0].left, positionLocking);
         $(this).css({ top: '0px', left: closest.closestPosition });
@@ -292,7 +292,7 @@ $(document).ready(function () {
         if (wordEntry) {
           wordEntry.finalPosition = closest.closestPosition;
         }
-        // console.log("Final positions for word fields:", finalPositionsForWordFields);
+        console.log("Final positions for word fields:", finalPositionsForWordFields);
       }
     }
   });
@@ -362,6 +362,8 @@ $(document).ready(function () {
 let submitBtn = document.getElementById('submit-btn');
 //console.log(submitBtn);
 document.querySelector('#submit-btn').addEventListener('click', async function () {
+  let fullUserInput = "";
+  let fullRandomWord = "";
   finalPositionsForWordFields.forEach((wordField, index) => {
     let className;
     // Check if device is mobile
@@ -376,25 +378,31 @@ document.querySelector('#submit-btn').addEventListener('click', async function (
     let input = word.querySelector(`[${className}="${wordField.finalPosition}"] .input`);
     let userInput = input ? input.value : "";
     //console.log(`User input for ${wordField.word}: ${userInput}`);
-    // Assume that randomWord is an array where each element is a random word for corresponding word-field
-    let currentStatus
-    if (userInput.toUpperCase() === randomWord[index].toUpperCase()) {
-      // If they match, change the color of the letter boxes to green
-      changeInputColor("green");
-      currentStatus = document.querySelector('.correct_answer');
-      currentStatus.style.display = 'block';
-      // Disable dragging for .word-field elements
-      $('.word-field').draggable('disable');
-      $('.correct-answer .word-field').css('cursor', 'default');
-      $('.correct-answer .rectangle').css('cursor', 'default');
-    } else (userInput.toUpperCase() !== randomWord[index].toUpperCase()); {
-      // If they don't match, change the color of the letter boxes to red
-      changeInputColor("red");
-      currentStatus = document.querySelector('.correct_answer');
-      $('.word-field').draggable('ebable');
-      currentStatus.style.display = 'none';
-    }
+    console.log("User Input: ", userInput); // logging user input
+    console.log("Random Word: ", randomWord.toUpperCase()); // logging random word
+    fullUserInput += userInput; // Add user input to full word
+    fullRandomWord += randomWord[index].toUpperCase(); // Add character to full random word
   });
+  console.log("Full User Input: ", fullUserInput); // logging user input
+    console.log("Full Random Word: ", fullRandomWord); // logging random word
+  // Assume that randomWord is an array where each element is a random word for corresponding word-field
+  let currentStatus;
+  if (fullUserInput === fullRandomWord) {
+    // If they match, change the color of the letter boxes to green
+    changeInputColor("green");
+    currentStatus = document.querySelector('.correct_answer');
+    currentStatus.style.display = 'block';
+    // Disable dragging for .word-field elements
+    $('.word-field').draggable('disable');
+    $('.correct-answer .word-field').css('cursor', 'default');
+    $('.correct-answer .rectangle').css('cursor', 'default');
+  } else {
+    // If they don't match, change the color of the letter boxes to red
+    changeInputColor("red");
+    currentStatus = document.querySelector('.correct_answer');
+    $('.word-field').draggable('enable');
+    currentStatus.style.display = 'none';
+  }
 });
 
 function changeInputColor(color) {
