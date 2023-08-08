@@ -1,38 +1,93 @@
+let consoleLogs = [];
+let randomWord;
+function getRandomWord() {
+  let randomIndex = Math.floor(Math.random() * wordBank.length);
+  randomWord = wordBank[randomIndex];
+  let hintDivs = document.querySelectorAll(".hint");
+  let answerDivs = document.querySelectorAll(".answer_letter");
+  console.log("Random Word:", randomWord);
+  for (let i = 0; i < randomWord.length; i++) {
+    let letter = randomWord[i];
+    // Check if the letter exists in the updatedHints object
+    if (updatedHints.hasOwnProperty(letter)) {
+      let letterHints = updatedHints[letter];
+      let hintIndex = Math.floor(Math.random() * letterHints.length);
+      let selectedHint = letterHints[hintIndex];
+      // Convert letterHints to an array and remove the selected hint
+      letterHints = Object.values(letterHints);
+      letterHints.splice(hintIndex, 1);
+      updatedHints[letter] = letterHints;
+      // Add the hint to the appropriate div
+      if (hintDivs[i]) {
+        hintDivs[i].innerText = selectedHint.hint;
+        answerDivs[i].innerText = selectedHint.hint;
+      }
+      console.log("Hint:", selectedHint.hint);
+      consoleLogs.push({ [selectedHint.answer]: selectedHint.hint });
+      console.log("Answer:", selectedHint.answer);
+    }
+  }
+  //console.log(updatedHints)
+  return randomWord;
+}
+
+/*
+  This fucntion is used to help the game detrmin when to show the user the Hints when hovering, clicking, or tapping on the word fields.
+*/
 $(document).ready(function () {
+  function isTouchDevice() {
+    return ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0);
+  }
+
+  function showElement($element) {
+    $element.show(300);
+  }
+
+  function hideElement($element) {
+    $element.hide(300);
+  }
+
+  function showHintAndAnswer() {
+    if (!$(this).hasClass('correct')) {
+      clearTimeout($(this).data('hoverTimeout'));
+      showElement($(this).data('hint'));
+      showElement($(this).data('answerLetter'));
+    }
+  }
+
+  function hideHintAndAnswer() {
+    if (!$(this).hasClass('correct') && !$(this).hasClass('clicked')) {
+      var hoverTimeout = setTimeout(() => {
+        hideElement($(this).data('hint'));
+        hideElement($(this).data('answerLetter'));
+      }, 200);
+      $(this).data('hoverTimeout', hoverTimeout);
+    }
+  }
+
+  function handleHintClick() {
+    if (!$(this).hasClass('correct')) {
+      $('.clicked').removeClass('clicked').prev('.hint').hide(300);
+      $('.answer_letter').hide(300);
+      $(this).addClass('clicked');
+      showHintAndAnswer.call(this);
+    }
+  }
+
   $(".word-field, .wordoftheday").each(function (index) {
-    var hintNumber = index + 1;
-    var $hint = $(".hint" + hintNumber);
-    var $answerLetter = $(".answer_letter" + hintNumber);
-    var hoverTimeout;
-    var isTouchDevice = ('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0);
+    var $hint = $(".hint" + (index + 1));
+    var $answerLetter = $(".answer_letter" + (index + 1));
 
-    // Helper function to show the hint and answer letter
-    function showHintAndAnswer() {
-      if (!$(this).hasClass('correct')) {
-        clearTimeout(hoverTimeout);
-        $hint.show(300);
-        $answerLetter.show(300);
-      }
-    }
+    $(this).data('hint', $hint);
+    $(this).data('answerLetter', $answerLetter);
 
-    // Helper function to hide the hint and answer letter
-    function hideHintAndAnswer() {
-      if (!$(this).hasClass('correct') && !$(this).hasClass('clicked')) {
-        hoverTimeout = setTimeout(function () {
-          $hint.hide(300);
-          $answerLetter.hide(300);
-        }, 200);
-      }
-    }
-
-    // Handle hover and touch events
-    if (isTouchDevice) {
+    if (isTouchDevice()) {
       $(this).on('touchstart', function (e) {
         e.preventDefault();
         if ($(this).hasClass('clicked')) {
           $(this).removeClass('clicked');
-          $hint.hide(300);
-          $answerLetter.hide(300);
+          hideElement($hint);
+          hideElement($answerLetter);
         } else {
           $('.clicked').removeClass('clicked').prev('.hint').hide(300);
           $('.answer_letter').hide(300);
@@ -41,14 +96,7 @@ $(document).ready(function () {
         }
       });
     } else {
-      $(this).hover(showHintAndAnswer, hideHintAndAnswer).click(function () {
-        if (!$(this).hasClass('correct')) {
-          $('.clicked').removeClass('clicked').prev('.hint').hide(300);
-          $('.answer_letter').hide(300);
-          $(this).addClass('clicked');
-          showHintAndAnswer.call(this);
-        }
-      });
+      $(this).hover(showHintAndAnswer, hideHintAndAnswer).click(handleHintClick);
     }
   });
 
@@ -60,6 +108,7 @@ $(document).ready(function () {
     }
   });
 });
+
 
 
 let wordContainers = document.querySelectorAll('.word1, .word2, .word3, .word4, .word5');
@@ -93,7 +142,7 @@ wordContainers.forEach((wordContainer) => {
       } else {
         submitBtn.style.visibility = 'hidden';
       }
-      if(e.target.value){
+      if (e.target.value) {
         e.target.style.border = '1px solid lightgray';
         e.target.dataset.animation = 'pop'; // change data-animation to 'pop'
       } else {
@@ -125,7 +174,7 @@ wordContainers.forEach((wordContainer) => {
         }
       }
     });
-    
+
 
     input.addEventListener('keyup', (e) => {
       if (e.key === "Backspace" && input.value === "") {
@@ -190,40 +239,6 @@ wordContainers.forEach((wordContainer) => {
   });
 });
 
-let consoleLogs = [];
-let randomWord;
-function getRandomWord() {
-  let randomIndex = Math.floor(Math.random() * wordBank.length);
-  randomWord = wordBank[randomIndex];
-  let hintDivs = document.querySelectorAll(".hint");
-  let answerDivs = document.querySelectorAll(".answer_letter");
-  console.log("Random Word:", randomWord);
-  for (let i = 0; i < randomWord.length; i++) {
-    let letter = randomWord[i];
-    // Check if the letter exists in the updatedHints object
-    if (updatedHints.hasOwnProperty(letter)) {
-      let letterHints = updatedHints[letter];
-      let hintIndex = Math.floor(Math.random() * letterHints.length);
-      let selectedHint = letterHints[hintIndex];
-      // Convert letterHints to an array and remove the selected hint
-      letterHints = Object.values(letterHints);
-      letterHints.splice(hintIndex, 1);
-      updatedHints[letter] = letterHints;
-      // Add the hint to the appropriate div
-      if (hintDivs[i]) {
-        hintDivs[i].innerText = selectedHint.hint;
-        answerDivs[i].innerText = selectedHint.hint;
-      }
-      console.log("Hint:", selectedHint.hint);
-      consoleLogs.push({ [selectedHint.answer]: selectedHint.hint });
-      console.log("Answer:", selectedHint.answer);
-    }
-  }
-  //console.log(updatedHints)
-  return randomWord;
-}
-
-
 // Get all the wordoftheday and letter_box elements
 const wordOfDayElements = document.querySelectorAll('.wordoftheday');
 const letterBoxElements = document.querySelectorAll('.letter_box');
@@ -249,7 +264,7 @@ let lockOnPositions = [
 let lockOnPositionsForMobile = [
   { letter_box: "box1", position: 320 },
   { letter_box: "box2", position: 160 },
-  { letter_box: "box3", position: -10 },
+  { letter_box: "box3", position: 0 },
   { letter_box: "box4", position: -160 },
   { letter_box: "box5", position: -320 }
 ];
@@ -276,30 +291,40 @@ $(document).ready(function () {
     scroll: false,
     axis: "x",
     start: function () {
+      // console.log("Adding active class");
       $(this).addClass("active");
       $(this).css("cursor", "move");
       updateWordFieldPositionsBefore();
     },
     drag: function () {
+      // console.log('Dragging...');
       updateWordFieldPositionsAfter();
+      // console.log("Current left position while dragging:", $(this).position().left);
     },
     stop: function () {
-      updateWordFieldPositionsAfter();
+      var position = $(this).position();
+      var closest = findClosestPosition(position.left, positionLocking);
+      $(this).css({ top: '0px', left: closest.closestPosition });
+
+      let word = this.classList[0];
+      let wordEntry = finalPositionsForWordFields.find(entry => entry.word === word);
+      if (wordEntry) {
+        wordEntry.finalPosition = closest.closestPosition;
+      }
       $(this).removeClass("active");
       $(this).css("cursor", "");
-      // console.log("Before Dragging and Dropping:", wordFieldPositionsBefore);
-      // console.log("After Dragging and Dropping:", wordFieldPositionsAfter);
-      if (wordFieldPositionsAfter[0]) {
-        var closest = findClosestPosition(wordFieldPositionsAfter[0].left, positionLocking);
-        $(this).css({ top: '0px', left: closest.closestPosition });
-        updateWordFieldPositionsAfter();
-        let word = this.classList[0];
-        let wordEntry = finalPositionsForWordFields.find(entry => entry.word === word);
-        if (wordEntry) {
-          wordEntry.finalPosition = closest.closestPosition;
+
+      // Check if any word field remains with position 'null'
+      finalPositionsForWordFields.forEach(entry => {
+        if (entry.finalPosition === null) {
+          // Set the default position based on device type
+          if (/Mobi|Android/i.test(navigator.userAgent)) {
+            entry.finalPosition = 0; // default position for mobile
+          } else {
+            entry.finalPosition = -0.5; // default position for other devices
+          }
         }
-        // console.log("Final positions for word fields:", finalPositionsForWordFields);
-      }
+      });
     }
   });
   $(".wordoftheday").droppable({
@@ -329,9 +354,8 @@ $(document).ready(function () {
     wordFieldPositionsAfter = [];
     $(".word-field.active").each(function () {
       var position = $(this).position();
-      if (!position) {
-        position = { left: -0.5 };
-      }
+      //console.log("Word-field being processed:", $(this).attr('class')); // let's see which word-field is being processed
+      //console.log("Position:", position);
       wordFieldPositionsAfter.push(position);
     });
   }
@@ -339,22 +363,31 @@ $(document).ready(function () {
     var closestPosition = positions[0].position;
     var closestDistance = Math.abs(currentPosition - closestPosition);
     var closestIndex = 0;
-
+    var epsilon = 0.0001; // A small value to handle floating-point imprecision
+    //console.log("Starting with:", closestPosition, " as closest position.");
     for (var i = 1; i < positions.length; i++) {
-      var distance = Math.abs(currentPosition - positions[i].position);
+      var distance;
+      if (Math.abs(currentPosition - (-0.5)) < epsilon) {
+        // Treat as center position
+        distance = Math.abs(positions[i].position - (-0.5));
+        //console.log("Treating as center position:", positions[i].position);
+      } else {
+        distance = Math.abs(currentPosition - positions[i].position);
+      }
       if (distance < closestDistance) {
         closestDistance = distance;
         closestPosition = positions[i].position;
         closestIndex = i;
       }
     }
+    console.log("Evaluating Current Position:", currentPosition);
+    console.log("Closest Match Found At:", closestPosition);
     return { closestPosition, closestIndex };
   }
   // Function to handle tap event on the input fields
   function handleTapEvent(event) {
     // Get the target element that was tapped
     let target = event.target;
-
     // Check if the target is an input field with the 'input' class
     if (target.classList.contains('input')) {
       // Bring the tapped input field into focus
@@ -366,40 +399,55 @@ $(document).ready(function () {
 });
 
 let submitBtn = document.getElementById('submit-btn');
-//console.log(submitBtn);
-document.querySelector('#submit-btn').addEventListener('click', function () {
+document.querySelector('#submit-btn').addEventListener('click', async function () {
+  let fullUserInput = '';
+  let fullRandomWord = '';
   finalPositionsForWordFields.forEach((wordField, index) => {
     let className;
     // Check if device is mobile
     if (/Mobi|Android/i.test(navigator.userAgent)) {
       className = 'data-pos-mobile';
+      // If position is null, set to the default mobile position
+      if (wordField.finalPosition === null) {
+        wordField.finalPosition = 0;
+      }
     } else {
       className = 'data-pos';
+      // If position is null, set to the default desktop position
+      if (wordField.finalPosition === null) {
+        wordField.finalPosition = -0.5;
+      }
     }
     // Get the corresponding .word-field element
     let word = document.querySelector(`.${wordField.word}`);
     // Get the input corresponding to the finalPosition
     let input = word.querySelector(`[${className}="${wordField.finalPosition}"] .input`);
     let userInput = input ? input.value : "";
-    //console.log(`User input for ${wordField.word}: ${userInput}`);
-    // Assume that randomWord is an array where each element is a random word for corresponding word-field
-    if (userInput.toUpperCase() === randomWord[index].toUpperCase()) {
-      // If they match, change the color of the letter boxes to green
-      changeInputColor("green");
-      const correctModal = document.querySelector('.correct_answer');
-      correctModal.style.display = 'block';
-      // Disable dragging for .word-field elements
-      $('.word-field').draggable('disable');
-      $('.correct-answer .word-field').css('cursor', 'default');
-      $('.correct-answer .rectangle').css('cursor', 'default');
-    } else {
-      // If they don't match, change the color of the letter boxes to red
-      changeInputColor("red");
-      const correctModal = document.querySelector('.correct_answer');
-      correctModal.style.display = 'none';
-    }
-    
+    // Append to full words
+    fullUserInput += userInput.toUpperCase();
+    fullRandomWord += randomWord[index].toUpperCase();
   });
+  // console.log('fullUserInput:', fullUserInput);
+  // console.log('fullRandomWord:', fullRandomWord);
+  // Now perform the comparison on full words
+  if (fullUserInput === fullRandomWord) {
+    // If they match, change the color of the letter boxes to green
+    changeInputColor("green");
+    let currentStatus = document.querySelector('.correct_answer');
+    currentStatus.style.display = 'block';
+
+    // Disable dragging for .word-field elements
+    $('.word-field').draggable('disable');
+    $('.correct-answer .word-field').css('cursor', 'default');
+    $('.correct-answer .rectangle').css('cursor', 'default');
+  } else {
+    // If they don't match, change the color of the letter boxes to red
+    changeInputColor("red");
+    let currentStatus = document.querySelector('.correct_answer');
+    $('.word-field').draggable('enable');
+    currentStatus.style.display = 'none';
+  }
+
 });
 
 function changeInputColor(color) {
@@ -439,26 +487,38 @@ function checkAllWordsGuessed() {
   return allWordsGuessed;
 }
 
-// Function to check if the user is on a mobile device
+
 function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  var isIPad = /iPad/.test(userAgent);
+  var isIPhone = /iPhone/.test(userAgent);
+  var isAndroid = /Android/.test(userAgent);
+  var isMobile = /Mobile|iP(hone|od)|BlackBerry|IEMobile/.test(userAgent);
+  
+  // Touch capabilities
+  var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  // Screen properties
+  var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  var isSmallScreen = screenWidth <= 800;
+
+  return isIPad || isIPhone || (isAndroid && isMobile) || (hasTouch && isSmallScreen);
 }
 
-// Function to add or remove mobile class based on the device
 function handleMobileClass() {
   if (isMobileDevice()) {
-    document.body.classList.add('mobile');
+      document.body.classList.add('mobile');
   } else {
-    document.body.classList.remove('mobile');
+      document.body.classList.remove('mobile');
   }
 }
 
-// Check if the user is on a mobile device when the page loads and on window resize
 document.addEventListener('DOMContentLoaded', handleMobileClass);
 window.addEventListener('resize', handleMobileClass);
-//This prevenets the window from resizing for mobile devices
-document.addEventListener("DOMContentLoaded", function() {
-  if(document.body.classList.contains('mobile')) {
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (document.body.classList.contains('mobile')) {
     var metaTag = document.createElement('meta');
     metaTag.name = "viewport";
     metaTag.content = "width=device-width, initial-scale=.4, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no"; // Added shrink-to-fit attribute
@@ -477,32 +537,32 @@ function toggleHelpMenu() {
 
   // Add event listeners for click and touch events
   helpButton.addEventListener('click', (event) => {
-      event.stopPropagation();
-      helpMenu.style.display = 'block';
+    event.stopPropagation();
+    helpMenu.style.display = 'block';
   });
   helpButton.addEventListener('touchend', (event) => {
-      event.stopPropagation();
-      helpMenu.style.display = 'block';
+    event.stopPropagation();
+    helpMenu.style.display = 'block';
   });
   exitButton.addEventListener('click', (event) => {
-      event.stopPropagation();
-      helpMenu.style.display = 'none';
+    event.stopPropagation();
+    helpMenu.style.display = 'none';
   });
   exitButton.addEventListener('touchend', (event) => {
-      event.stopPropagation();
-      helpMenu.style.display = 'none';
+    event.stopPropagation();
+    helpMenu.style.display = 'none';
   });
   document.addEventListener('click', () => {
-      helpMenu.style.display = 'none';
+    helpMenu.style.display = 'none';
   });
   document.addEventListener('touchend', () => {
-      helpMenu.style.display = 'none';
+    helpMenu.style.display = 'none';
   });
   helpMenu.addEventListener('click', (event) => {
-      event.stopPropagation();
+    event.stopPropagation();
   });
   helpMenu.addEventListener('touchend', (event) => {
-      event.stopPropagation();
+    event.stopPropagation();
   });
 }
 
@@ -511,8 +571,7 @@ window.addEventListener('load', () => {
 });
 
 function returnHome() {
-  const homeButton = document.querySelector('.play');
-
+  const homeButton = document.querySelector('.HomeIcon');
   // Add event listeners for click and touch events
   homeButton.addEventListener('click', () => {
     window.location.href = 'index.html';
