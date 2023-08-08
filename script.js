@@ -258,7 +258,7 @@ let lockOnPositions = [
 let lockOnPositionsForMobile = [
   { letter_box: "box1", position: 320 },
   { letter_box: "box2", position: 160 },
-  { letter_box: "box3", position: -10 },
+  { letter_box: "box3", position: 0 },
   { letter_box: "box4", position: -160 },
   { letter_box: "box5", position: -320 }
 ];
@@ -313,7 +313,7 @@ $(document).ready(function () {
         if (entry.finalPosition === null) {
           // Set the default position based on device type
           if (/Mobi|Android/i.test(navigator.userAgent)) {
-            entry.finalPosition = -10; // default position for mobile
+            entry.finalPosition = 0; // default position for mobile
           } else {
             entry.finalPosition = -0.5; // default position for other devices
           }
@@ -403,7 +403,7 @@ document.querySelector('#submit-btn').addEventListener('click', async function (
       className = 'data-pos-mobile';
       // If position is null, set to the default mobile position
       if (wordField.finalPosition === null) {
-        wordField.finalPosition = -10;
+        wordField.finalPosition = 0;
       }
     } else {
       className = 'data-pos';
@@ -563,7 +563,7 @@ window.addEventListener('load', () => {
 });
 
 function returnHome() {
-  const homeButton = document.querySelector('.play');
+  const homeButton = document.querySelector('.HomeIcon');
   // Add event listeners for click and touch events
   homeButton.addEventListener('click', () => {
     window.location.href = 'index.html';
