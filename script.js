@@ -442,7 +442,7 @@ function checkAllWordsGuessed() {
 
 // Function to check if the user is on a mobile device
 function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  return (typeof window.orientation !== "undefined") || (screen.width <= 768);
 }
 
 // Function to add or remove mobile class based on the device
