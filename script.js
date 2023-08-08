@@ -193,17 +193,23 @@ wordContainers.forEach((wordContainer) => {
         let hint = wordContainer.previousElementSibling.textContent.trim();
         //console.log('hint:', hint);
         let answer = null;
+        // console.log('Hint:', hint);
+        // console.log('Console logs:', consoleLogs);
+        
         for (let i = 0; i < consoleLogs.length; i++) {
           let log = consoleLogs[i];
           let logKeys = Object.keys(log);
-          let logValues = Object.values(log);
-          if (logValues.includes(hint)) {
-            let valueIndex = logValues.indexOf(hint);
-            answer = logKeys[valueIndex];
-            break;
+          let logValues = Object.values(log).map(val => val.trim());  // added trim()
+      
+          if (logValues.includes(hint.trim())) {  // added trim()
+              let valueIndex = logValues.indexOf(hint.trim());  // added trim()
+              answer = logKeys[valueIndex];
+              // console.log('Answer found:', answer);
+              break;
           }
-        }
-        //console.log('answer:', answer);
+      }
+        // console.log('answer:', answer);
+        // console.log('currentWord:', currentWord)
         if (currentWord === answer.toUpperCase()) {
           inputs.forEach((input) => {
             input.setAttribute('readonly', '');
@@ -465,13 +471,15 @@ function checkAllWordsGuessed() {
     for (let i = 0; i < consoleLogs.length; i++) {
       let log = consoleLogs[i];
       let logKeys = Object.keys(log);
-      let logValues = Object.values(log);
-      if (logValues.includes(hint)) {
-        let valueIndex = logValues.indexOf(hint);
-        answer = logKeys[valueIndex];
-        break;
+      let logValues = Object.values(log).map(val => val.trim());  // added trim()
+  
+      if (logValues.includes(hint.trim())) {  // added trim()
+          let valueIndex = logValues.indexOf(hint.trim());  // added trim()
+          answer = logKeys[valueIndex];
+          // console.log('Answer found:', answer);
+          break;
       }
-    }
+  }
     if (currentWord.toUpperCase() !== answer.toUpperCase()) {
       allWordsGuessed = false;
     }
