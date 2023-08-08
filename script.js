@@ -563,7 +563,7 @@ window.addEventListener('load', () => {
 });
 
 function returnHome() {
-  const homeButton = document.querySelector('.play');
+  const homeButton = document.querySelector('.HomeIcon');
   // Add event listeners for click and touch events
   homeButton.addEventListener('click', () => {
     window.location.href = 'index.html';
