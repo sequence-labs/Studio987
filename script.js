@@ -479,21 +479,33 @@ function checkAllWordsGuessed() {
   return allWordsGuessed;
 }
 
-// Function to check if the user is on a mobile device
+
 function isMobileDevice() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  var isIPad = /iPad/.test(userAgent);
+  var isIPhone = /iPhone/.test(userAgent);
+  var isAndroid = /Android/.test(userAgent);
+  var isMobile = /Mobile|iP(hone|od)|BlackBerry|IEMobile/.test(userAgent);
+  
+  // Touch capabilities
+  var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+  // Screen properties
+  var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+  var isSmallScreen = screenWidth <= 800;
+
+  return isIPad || isIPhone || (isAndroid && isMobile) || (hasTouch && isSmallScreen);
 }
 
-// Function to add or remove mobile class based on the device
 function handleMobileClass() {
   if (isMobileDevice()) {
-    document.body.classList.add('mobile');
+      document.body.classList.add('mobile');
   } else {
-    document.body.classList.remove('mobile');
+      document.body.classList.remove('mobile');
   }
 }
 
-// Check if the user is on a mobile device when the page loads and on window resize
 document.addEventListener('DOMContentLoaded', handleMobileClass);
 window.addEventListener('resize', handleMobileClass);
 
