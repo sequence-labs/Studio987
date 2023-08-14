@@ -440,8 +440,38 @@ document.querySelector('#submit-btn').addEventListener('click', async function (
     let currentStatus = document.querySelector('.correct_answer');
     $('.word-field').draggable('enable');
     currentStatus.style.display = 'none';
-  }
 
+    // Add shake animation to all elements with the class wordoftheday
+    let wordOfTheDayElements = document.querySelectorAll('.wordoftheday');
+    wordOfTheDayElements.forEach(element => {
+      element.classList.add('shake');
+    });
+
+    // Add shake animation only to the letter_box with the appropriate data position
+    finalPositionsForWordFields.forEach((wordField) => {
+      let className = /Mobi|Android/i.test(navigator.userAgent) ? 'data-pos-mobile' : 'data-pos';
+      let word = document.querySelector(`.${wordField.word}`);
+      let positionBox = word.querySelector(`[${className}="${wordField.finalPosition}"]`);
+      if (positionBox) {
+        positionBox.classList.add('shake');
+      }
+    });
+
+    // Remove shake animation after it completes
+    setTimeout(() => {
+      wordOfTheDayElements.forEach(element => {
+        element.classList.remove('shake');
+      });
+      finalPositionsForWordFields.forEach((wordField) => {
+        let className = /Mobi|Android/i.test(navigator.userAgent) ? 'data-pos-mobile' : 'data-pos';
+        let word = document.querySelector(`.${wordField.word}`);
+        let positionBox = word.querySelector(`[${className}="${wordField.finalPosition}"]`);
+        if (positionBox) {
+          positionBox.classList.remove('shake');
+        }
+      });
+    }, 500); // 500ms is the duration of your shake animation
+  }
 });
 
 function changeInputColor(color) {
@@ -487,7 +517,6 @@ function isMobileDevice() {
   var isIPhone = /iPhone/.test(userAgent);
   var isAndroid = /Android/.test(userAgent);
   var isMobile = /Mobile|iP(hone|od)|BlackBerry|IEMobile/.test(userAgent);
-  
   // Touch capabilities
   var hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
@@ -500,9 +529,9 @@ function isMobileDevice() {
 
 function handleMobileClass() {
   if (isMobileDevice()) {
-      document.body.classList.add('mobile');
+    document.body.classList.add('mobile');
   } else {
-      document.body.classList.remove('mobile');
+    document.body.classList.remove('mobile');
   }
 }
 
@@ -520,6 +549,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 window.addEventListener('load', () => {
   toggleHelpMenu();
+  returnHome();
+  playAgain();  
 });
 
 function toggleHelpMenu() {
@@ -558,10 +589,6 @@ function toggleHelpMenu() {
   });
 }
 
-window.addEventListener('load', () => {
-  returnHome();
-});
-
 function returnHome() {
   const homeButton = document.querySelector('.HomeIcon');
   // Add event listeners for click and touch events
@@ -575,13 +602,12 @@ function returnHome() {
 
 
 function playAgain() {
-  const homeButton = document.querySelector('.HomeIcon');
-
+  const playAgain = document.querySelector('.play');
   // Add event listeners for click and touch events
-  homeButton.addEventListener('click', () => {
+  playAgain.addEventListener('click', () => {
     window.location.href = 'index.html';
   });
-  homeButton.addEventListener('touchend', () => {
+  playAgain.addEventListener('touchend', () => {
     window.location.href = 'index.html';
   });
 }

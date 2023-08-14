@@ -283,7 +283,6 @@ let hints = {
         { answer: "Wheat", hint: "A cereal plant cultivated for its grain." }
     ],
     x: [
-        { answer: "Xylose", hint: "A sugar with 5 carbon atoms." },
         { answer: "Exxon", hint: "A multinational oil and gas corporation." },
         { answer: "Xebec", hint: "A type of sailing vessel." },
         { answer: "Xylan", hint: "A polysaccharide found in plant cell walls." },
