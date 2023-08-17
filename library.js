@@ -105,7 +105,6 @@ let hints = {
         { answer: "human", hint: "What we all are." }
     ],
     i: [
-        { answer: "island", hint: "A piece of land surrounded by water." },
         { answer: "igloo", hint: "A house made of ice and snow." },
         { answer: "ivory", hint: "A hard white material from elephant tusks." },
         { answer: "image", hint: "A picture or representation." },
