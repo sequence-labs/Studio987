@@ -7,6 +7,27 @@
     <title>Welcome Page</title>
     <link href="./welcome.css" rel="stylesheet" />
     <link href="./helpModal.css" rel="stylesheet" />
+    <style>
+        .footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.3);
+        }
+        .footer a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -260,6 +281,10 @@
             </div>
         </div>
     </div>
+    <footer class="footer">
+        <a href="terms-of-service.html">Terms of Service</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+    </footer>
     <script src="welcome-script.js"></script>
 </body>
 
